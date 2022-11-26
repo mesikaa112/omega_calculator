@@ -1,22 +1,28 @@
-def is_integer(operand: str) -> bool:
+def is_number(operand: str) -> bool:
     """
-    the method check if a string can be an int or not
-    :param operand: string
-    :return: True if a string can be an int and False if not
+        the method check if a string can be a number (float number) or not
+        :param operand: string
+        :return: True if a string can be a number and False if not
     """
     try:
-        operand = int(operand)
+        operand = float(operand)
         return True
     except ValueError:
         return False
+    except EOFError:
+        return False
+    except Error:
+        return False
 
-
+#
 # def check_plus_validate(equation: str, index: int) -> bool:
-#     # if index != 0 and is_integer(str[index - 1]):
-#     #     if str[index + 1] != '~' or str[index + 1] != '-':
-#     #         # if
-#     #
-#     # return False
+#     if
+#
+#     if index != 0 and is_number(str[index - 1]):
+#         if str[index + 1] != '~' or str[index + 1] != '-':
+#             if
+#
+#     return False
 #
 # def check_minus_validate(equation: str, index: int) -> bool:
 # def check_multiply_validate(equation: str, index: int) -> bool:
