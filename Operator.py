@@ -1,10 +1,8 @@
-"""
-Author: Yonatan Mesika
-Date: 20.11.2022
-module-info: this module contains the classes of the operators
-"""
-
 import math
+from Validation import *
+from calculation import *
+
+operators = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3, '%': 4, '$': 5, '&': 5, '@': 5, '~': 6, '!': 6}
 
 
 class Operator:
@@ -12,20 +10,16 @@ class Operator:
     this class is the base class of all the operators classes
     """
 
-    def __init__(self):
+    def __init__(self, equation: str, index: int):
         self.operator = None
-        # self.priority = 0
+        self.equation = equation
+        self.index = index
 
-    def calculate(self, operand1, operand2) -> int:
+    def calculate(self):
         """
         this method is the method that overrides in the operators classes
-        :param operand1: first number
-        :param operand2: second number
-        :return: pass
+        :return: None
         """
-        return None
-
-    def is_valid_operator(self):
         return None
 
 
@@ -34,18 +28,18 @@ class Plus(Operator):
         this class presents the Plus class
     """
 
-    def __init__(self):
+    def __init__(self, equation: str, index: int):
         super().__init__(self)
         self.operator = '+'
+        self.equation = equation
+        self.index = index
 
-    def calculate(self, operand1: int, operand2: int) -> int:
+    def calculate(self) -> float:
         """
-        this method calculates operand1 plus operand2
-        :param operand1: first number
-        :param operand2: second number
+        this method calculates operand1 plus operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return operand1 + operand2
+        return plus_calculate(self.equation, self.index)
 
 
 class Minus(Operator):
@@ -53,18 +47,18 @@ class Minus(Operator):
     this class presents the Minus class
     """
 
-    def __init__(self):
+    def __init__(self, equation: str, index: int):
         super().__init__(self)
         self.operator = '-'
+        self.equation = equation
+        self.index = index
 
-    def calculate(self, operand1: int, operand2: int) -> int:
+    def calculate(self) -> float:
         """
-        this method calculates operand1 minus operand2
-        :param operand1: first number
-        :param operand2: second number
+        this method calculates operand1 minus operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return operand1 - operand2
+        return minus_calculate(self.equation, self.index)
 
 
 class Multiply(Operator):
@@ -72,18 +66,18 @@ class Multiply(Operator):
     this class presents the Multiply class
     """
 
-    def __init__(self):
+    def __init__(self, equation: str, index: int):
         super().__init__(self)
         self.operator = '*'
+        self.equation = equation
+        self.index = index
 
-    def calculate(self, operand1: int, operand2: int) -> int:
+    def calculate(self) -> float:
         """
-        this method calculates operand1 Multiply operand2
-        :param operand1: first number
-        :param operand2: second number
+        this method calculates operand1 Multiply operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return operand1 * operand2
+        return mul_calculate(self.equation, self.index)
 
 
 class Divide(Operator):
@@ -91,20 +85,18 @@ class Divide(Operator):
     this class presents the Divide class
     """
 
-    def __init__(self):
+    def __init__(self, equation: str, index: int):
         super().__init__(self)
         self.operator = '/'
+        self.equation = equation
+        self.index = index
 
-    def calculate(self, operand1: int, operand2: int) -> int:
+    def calculate(self) -> float:
         """
-        this method calculates operand1 divide operand2
-        :param operand1: first number
-        :param operand2: second number
+        this method calculates operand1 divide operand2 by using the relevant function
         :return: the result of the calculation
         """
-        if operand2 == 0:
-            raise ValueError("you cant divide by 0!")
-        return operand1 / operand2
+        return div_calculate(self.equation, self.index)
 
 
 class Power(Operator):
@@ -112,18 +104,18 @@ class Power(Operator):
     this class presents the Power class
     """
 
-    def __init__(self):
+    def __init__(self, equation: str, index: int):
         super().__init__(self)
         self.operator = '^'
+        self.equation = equation
+        self.index = index
 
-    def calculate(self, operand1: int, operand2: int) -> int:
+    def calculate(self) -> float:
         """
-        this method calculates operand1 Power operand2
-        :param operand1: first number
-        :param operand2: second number
+        this method calculates operand1 Power operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return math.pow(operand1, operand2)
+        return pow_calculate(self.equation, self.index)
 
 
 class Modulo(Operator):
@@ -131,18 +123,18 @@ class Modulo(Operator):
     this class presents the Modulo class
     """
 
-    def __init__(self):
+    def __init__(self, equation: str, index: int):
         super().__init__(self)
         self.operator = '%'
+        self.equation = equation
+        self.index = index
 
-    def calculate(self, operand1: int, operand2: int) -> int:
+    def calculate(self) -> float:
         """
-        this method calculates operand1 Modulo operand2
-        :param operand1: first number
-        :param operand2: second number
+        this method calculates operand1 Modulo operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return operand1 % operand2
+        return mod_calculate(self.equation, self.index)
 
 
 class Maximum(Operator):
@@ -150,20 +142,18 @@ class Maximum(Operator):
     this class presents the Maximum class
     """
 
-    def __init__(self):
+    def __init__(self, equation: str, index: int):
         super().__init__(self)
         self.operator = '$'
+        self.equation = equation
+        self.index = index
 
-    def calculate(self, operand1: int, operand2: int) -> int:
+    def calculate(self) -> float:
         """
-        this method calculates the Maximum from operand1 and operand2
-        :param operand1: first number
-        :param operand2: second number
+        this method calculates the Maximum from operand1 and operand2 by using the relevant function
         :return: the result of the calculation
         """
-        if operand1 == operand2:
-            raise ValueError("the operands are equal, can't find Maximum!")
-        return max(operand1, operand2)
+        return max_calculate(self.equation, self.index)
 
 
 class Minimum(Operator):
@@ -171,20 +161,18 @@ class Minimum(Operator):
     this class presents the Minimum class
     """
 
-    def __init__(self):
+    def __init__(self, equation: str, index: int):
         super().__init__(self)
         self.operator = '&'
+        self.equation = equation
+        self.index = index
 
-    def calculate(self, operand1: int, operand2: int) -> int:
+    def calculate(self) -> float:
         """
-        this method calculates the Minimum from operand1 and operand2
-        :param operand1: first number
-        :param operand2: second number
+        this method calculates the Minimum from operand1 and operand2 by using the relevant function
         :return: the result of the calculation
         """
-        if operand1 == operand2:
-            raise ValueError("the operands are equal, can't find Minimum!")
-        return min(operand1, operand2)
+        return min_calculate(self.equation, self.index)
 
 
 class Average(Operator):
@@ -192,18 +180,18 @@ class Average(Operator):
     this class presents the Average class
     """
 
-    def __init__(self):
+    def __init__(self, equation: str, index: int):
         super().__init__(self)
         self.operator = '@'
+        self.equation = equation
+        self.index = index
 
-    def calculate(self, operand1: int, operand2: int) -> int:
+    def calculate(self) -> float:
         """
-        this method calculates the Average from operand1 and operand2
-        :param operand1: first number
-        :param operand2: second number
+        this method calculates the Average from operand1 and operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return (operand1 + operand2) / 2
+        return avg_calculate(self.equation, self.index)
 
 
 class Negative(Operator):
@@ -211,17 +199,18 @@ class Negative(Operator):
     this class presents the Negative class
     """
 
-    def __init__(self):
+    def __init__(self, equation: str, index: int):
         super().__init__(self)
         self.operator = '~'
+        self.equation = equation
+        self.index = index
 
-    def calculate(self, operand: int) -> int:
+    def calculate(self) -> float:
         """
-        this method calculates the Negative of operand
-        :param operand: number
+        this method calculates the Negative of operand by using the relevant function
         :return: the result of the calculation
         """
-        return -operand
+        return neg_calculate(self.equation, self.index)
 
 
 class Factorial(Operator):
@@ -229,28 +218,15 @@ class Factorial(Operator):
     this class presents the Factorial class
     """
 
-    def __init__(self):
+    def __init__(self, equation: str, index: int):
         super().__init__(self)
         self.operator = '!'
+        self.equation = equation
+        self.index = index
 
-    def factorial_calc(self, operand: int) -> int:
+    def calculate(self) -> float:
         """
-        this method is a recursive method that calculate the factorial of a number
-        :param operand: number
+        this method calculates the Factorial of operand by using the relevant function
         :return: the result of the calculation
         """
-        if operand == 1:
-            return 1
-        return operand * factorial_calc(operand - 1)
-
-    def calculate(self, operand: int) -> int:
-        """
-        this method calculates the Factorial of operand
-        :param operand1: number
-        :return: the result of the calculation
-        """
-        if not is_integer(operand):  ########################################################
-            raise TypeError("Factorial must be done on an integer number!")
-        if operand < 0:
-            raise ValueError("Factorial can't be done on a negative number!")
-        return factorial_calc(operand1)
+        return fac_calculate(self.equation, self.index)
