@@ -1,13 +1,13 @@
 """
 Author: Yonatan Mesika
-Date:
+Date: 19.02.2022
 """
 
-from welcome_output import welcome_output
+from start_calculator import start_calculation
 
 
 def main():
-    equation = welcome_output()
+    start_calculation()
 
 
 if __name__ == '__main__':

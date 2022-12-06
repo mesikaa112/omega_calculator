@@ -1,6 +1,5 @@
 from math import pow
-from Validation import *
-from substring_number import substring_number
+from validation import *
 
 
 def plus_calculate(equation: str, index: int) -> float:
@@ -84,7 +83,10 @@ def max_calculate(equation: str, index: int) -> float:
     """
     if check_maximum_validate(equation, index):
         operand1, operand2 = substring_number(equation, index)
-        return float(max(operand1, operand2))
+        if operand1 > operand2:
+            return float(operand1)
+        else:
+            return float(operand2)
 
 
 def min_calculate(equation: str, index: int) -> float:
@@ -96,7 +98,10 @@ def min_calculate(equation: str, index: int) -> float:
     """
     if check_minimum_validate(equation, index):
         operand1, operand2 = substring_number(equation, index)
-        return float(min(operand1, operand2))
+        if operand1 < operand2:
+            return float(operand1)
+        else:
+            return float(operand2)
 
 
 def avg_calculate(equation: str, index: int) -> float:
