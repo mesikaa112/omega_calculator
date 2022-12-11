@@ -74,3 +74,15 @@ class EmptyInputError(Error):
     def __init__(self, message="\nthere is an ERROR! you entered an empty equation"):
         self.message = message
         super().__init__(self.message)
+
+
+class DecimalPointError(Error):
+    def __init__(self, message="\nthere is an ERROR! there is too much decimal points in operand"):
+        self.message = message
+        super().__init__(self.message)
+
+
+class InValidCharsError(Error):
+    def __init__(self, message="\nthere is an ERROR! you entered invalid characters"):
+        self.message = message
+        super().__init__(self.message)

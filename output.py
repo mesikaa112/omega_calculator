@@ -1,4 +1,10 @@
-from operator import operators
+from const import *
+
+
+__all__ = [
+    'welcome_output',
+    'result_output',
+]
 
 
 def welcome_output() -> str:
@@ -8,8 +14,16 @@ def welcome_output() -> str:
     """
     return input(f"Hello, I'm OMEGA calculator :) \n"
                  f"type an equation and I will solve it for you \n"
-                 f"you can use those operators: {list(operators.keys())} \n"
+                 f"you can use those operators: {list(OPERATORS_PRIORITY.keys())} \n"
                  f"enter the equation here : ")
+
+
+def result_output(result: int):
+    """
+    this method is the result string that showed to the user after calculating his equation
+    :return: the result of the calculation
+    """
+    print(f"\nthe result of your equation is: {result}")
 
 # def start_over_output():
 #     """

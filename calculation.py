@@ -11,7 +11,10 @@ def plus_calculate(equation: str, index: int) -> float:
     """
     if check_plus_validate(equation, index):
         operand1, operand2 = substring_number(equation, index)
-        return float(operand1 + operand2)
+        if check_decimal_point_validate(operand1) and check_decimal_point_validate(operand2):
+            return float(float(operand1) + float(operand2))
+        else:
+            raise DecimalPointError()
 
 
 def minus_calculate(equation: str, index: int) -> float:
@@ -23,7 +26,10 @@ def minus_calculate(equation: str, index: int) -> float:
     """
     if check_minus_validate(equation, index):
         operand1, operand2 = substring_number(equation, index)
-        return float(operand1 - operand2)
+        if check_decimal_point_validate(operand1) and check_decimal_point_validate(operand2):
+            return float(float(operand1) - float(operand2))
+        else:
+            raise DecimalPointError()
 
 
 def mul_calculate(equation: str, index: int) -> float:
@@ -35,7 +41,10 @@ def mul_calculate(equation: str, index: int) -> float:
     """
     if check_multiply_validate(equation, index):
         operand1, operand2 = substring_number(equation, index)
-        return float(operand1 * operand2)
+        if check_decimal_point_validate(operand1) and check_decimal_point_validate(operand2):
+            return float(float(operand1) * float(operand2))
+        else:
+            raise DecimalPointError()
 
 
 def div_calculate(equation: str, index: int) -> float:
@@ -47,7 +56,10 @@ def div_calculate(equation: str, index: int) -> float:
     """
     if check_divide_validate(equation, index):
         operand1, operand2 = substring_number(equation, index)
-        return float(operand1 / operand2)
+        if check_decimal_point_validate(operand1) and check_decimal_point_validate(operand2):
+            return float(float(operand1) / float(operand2))
+        else:
+            raise DecimalPointError()
 
 
 def pow_calculate(equation: str, index: int) -> float:
@@ -59,7 +71,10 @@ def pow_calculate(equation: str, index: int) -> float:
     """
     if check_power_validate(equation, index):
         operand1, operand2 = substring_number(equation, index)
-        return float(pow(operand1, operand2))
+        if check_decimal_point_validate(operand1) and check_decimal_point_validate(operand2):
+            return float(pow(float(operand1), float(operand2)))
+        else:
+            raise DecimalPointError()
 
 
 def mod_calculate(equation: str, index: int) -> float:
@@ -71,7 +86,10 @@ def mod_calculate(equation: str, index: int) -> float:
     """
     if check_modulo_validate(equation, index):
         operand1, operand2 = substring_number(equation, index)
-        return float(operand1 % operand2)
+        if check_decimal_point_validate(operand1) and check_decimal_point_validate(operand2):
+            return float(float(operand1) % float(operand2))
+        else:
+            raise DecimalPointError()
 
 
 def max_calculate(equation: str, index: int) -> float:
@@ -83,10 +101,13 @@ def max_calculate(equation: str, index: int) -> float:
     """
     if check_maximum_validate(equation, index):
         operand1, operand2 = substring_number(equation, index)
-        if operand1 > operand2:
-            return float(operand1)
+        if check_decimal_point_validate(operand1) and check_decimal_point_validate(operand2):
+            if operand1 > operand2:
+                return float(operand1)
+            else:
+                return float(operand2)
         else:
-            return float(operand2)
+            raise DecimalPointError()
 
 
 def min_calculate(equation: str, index: int) -> float:
@@ -98,10 +119,13 @@ def min_calculate(equation: str, index: int) -> float:
     """
     if check_minimum_validate(equation, index):
         operand1, operand2 = substring_number(equation, index)
-        if operand1 < operand2:
-            return float(operand1)
+        if check_decimal_point_validate(operand1) and check_decimal_point_validate(operand2):
+            if operand1 < operand2:
+                return float(operand1)
+            else:
+                return float(operand2)
         else:
-            return float(operand2)
+            raise DecimalPointError()
 
 
 def avg_calculate(equation: str, index: int) -> float:
@@ -113,7 +137,10 @@ def avg_calculate(equation: str, index: int) -> float:
     """
     if check_average_validate(equation, index):
         operand1, operand2 = substring_number(equation, index)
-        return float((operand1 + operand2) / 2)
+        if check_decimal_point_validate(operand1) and check_decimal_point_validate(operand2):
+            return float((float(operand1) + float(operand2)) / 2)
+        else:
+            raise DecimalPointError()
 
 
 def neg_calculate(equation: str, index: int) -> float:
@@ -125,7 +152,10 @@ def neg_calculate(equation: str, index: int) -> float:
     """
     if check_negative_validate(equation, index):
         operand = substring_number(equation, index)[1]
-        return float(-operand)
+        if check_decimal_point_validate(operand):
+            return float(-float(operand))
+        else:
+            raise DecimalPointError()
 
 
 def fac_calculate(equation: str, index: int) -> float:
@@ -137,14 +167,18 @@ def fac_calculate(equation: str, index: int) -> float:
     """
     if check_factorial_validate(equation, index):
         operand = substring_number(equation, index)[0]
-        return float(factorial_calc(int(operand)))
+        if not check_decimal_point_validate(operand):
+            raise FactorialError("\nthere is an ERROR! you can't do Factorial on float number")
+        else:
+            return float(factorial_calc(substring_float_to_int(operand)))
 
 
 def factorial_calc(operand: int) -> int:
     """
-    this method is a recursive method that calculate the factorial of a number
+    this method calculates the factorial of a number
     :return: the result of the calculation
     """
-    if operand == 1:
-        return 1
-    return operand * factorial_calc(operand - 1)
+    result = 1
+    for num in range(1, operand + 1):
+        result *= num
+    return result
