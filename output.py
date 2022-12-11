@@ -4,6 +4,8 @@ from const import *
 __all__ = [
     'welcome_output',
     'result_output',
+    'end_of_calculation',
+    'goodbye_output'
 ]
 
 
@@ -12,10 +14,10 @@ def welcome_output() -> str:
     this method is the welcome string that showed for the user
     :return: the string that gets from the user
     """
-    return input(f"Hello, I'm OMEGA calculator :) \n"
+    return input(f"\nHello, I'm OMEGA calculator :) \n"
                  f"type an equation and I will solve it for you \n"
                  f"you can use those operators: {list(OPERATORS_PRIORITY.keys())} \n"
-                 f"enter the equation here : ")
+                 f"enter the equation here: ")
 
 
 def result_output(result: int):
@@ -24,6 +26,17 @@ def result_output(result: int):
     :return: the result of the calculation
     """
     print(f"\nthe result of your equation is: {result}")
+
+
+def end_of_calculation() -> str:
+    return input("type 'quit' to end calculating or anything else to calculating again :) ")
+
+
+def goodbye_output():
+    """
+    this method prints to the user the
+    """
+    print("thank you for using OMEGA calculator!")
 
 # def start_over_output():
 #     """

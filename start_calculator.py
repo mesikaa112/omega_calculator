@@ -10,42 +10,46 @@ def start_calculation():
     """
     this method starts the calculation process and takes care on the exceptions
     """
-    try:
-        equation = welcome_output()
-        result = calculate(equation)
-        result_output(result)
-    except PlusError as error:
-        print(error)
-    except MinusError as error:
-        print(error)
-    except MultiplyError as error:
-        print(error)
-    except DivideError as error:
-        print(error)
-    except PowerError as error:
-        print(error)
-    except ModuloError as error:
-        print(error)
-    except MaximumError as error:
-        print(error)
-    except MinimumError as error:
-        print(error)
-    except AverageError as error:
-        print(error)
-    except NegativeError as error:
-        print(error)
-    except FactorialError as error:
-        print(error)
-    except EmptyInputError as error:
-        print(error)
-    except IndexError as error:
-        print(error)
-    except DecimalPointError as error:
-        print(error)
-    except InValidCharsError as error:
-        print(error)
-    except EOFError as error:
-        print(error)
+    while True:
+        try:
+            equation = welcome_output()
+            result = calculate(equation)
+            result_output(result)
+            if end_of_calculation() == "quit":
+                goodbye_output()
+                break
+        except PlusError as error:
+            print(error)
+        except MinusError as error:
+            print(error)
+        except MultiplyError as error:
+            print(error)
+        except DivideError as error:
+            print(error)
+        except PowerError as error:
+            print(error)
+        except ModuloError as error:
+            print(error)
+        except MaximumError as error:
+            print(error)
+        except MinimumError as error:
+            print(error)
+        except AverageError as error:
+            print(error)
+        except NegativeError as error:
+            print(error)
+        except FactorialError as error:
+            print(error)
+        except EmptyInputError as error:
+            print(error)
+        except IndexError as error:
+            print(error)
+        except DecimalPointError as error:
+            print(error)
+        except InValidCharsError as error:
+            print(error)
+        except EOFError as error:
+            print(error)
 
 
 def calculate(equation: str) -> int:
