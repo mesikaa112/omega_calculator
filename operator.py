@@ -1,7 +1,5 @@
 from calculation import *
 
-operators = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3, '%': 4, '$': 5, '&': 5, '@': 5, '~': 6, '!': 6}
-
 
 class Operator:
     """
@@ -27,7 +25,7 @@ class Plus(Operator):
     """
 
     def __init__(self, equation: str, index: int):
-        super().__init__(self)
+        super().__init__(equation, index)
         self.operator = '+'
         self.equation = equation
         self.index = index
@@ -46,7 +44,7 @@ class Minus(Operator):
     """
 
     def __init__(self, equation: str, index: int):
-        super().__init__(self)
+        super().__init__(equation, index)
         self.operator = '-'
         self.equation = equation
         self.index = index
@@ -65,7 +63,7 @@ class Multiply(Operator):
     """
 
     def __init__(self, equation: str, index: int):
-        super().__init__(self)
+        super().__init__(equation, index)
         self.operator = '*'
         self.equation = equation
         self.index = index
@@ -84,7 +82,7 @@ class Divide(Operator):
     """
 
     def __init__(self, equation: str, index: int):
-        super().__init__(self)
+        super().__init__(equation, index)
         self.operator = '/'
         self.equation = equation
         self.index = index
@@ -103,7 +101,7 @@ class Power(Operator):
     """
 
     def __init__(self, equation: str, index: int):
-        super().__init__(self)
+        super().__init__(equation, index)
         self.operator = '^'
         self.equation = equation
         self.index = index
@@ -122,7 +120,7 @@ class Modulo(Operator):
     """
 
     def __init__(self, equation: str, index: int):
-        super().__init__(self)
+        super().__init__(equation, index)
         self.operator = '%'
         self.equation = equation
         self.index = index
@@ -141,7 +139,7 @@ class Maximum(Operator):
     """
 
     def __init__(self, equation: str, index: int):
-        super().__init__(self)
+        super().__init__(equation, index)
         self.operator = '$'
         self.equation = equation
         self.index = index
@@ -160,7 +158,7 @@ class Minimum(Operator):
     """
 
     def __init__(self, equation: str, index: int):
-        super().__init__(self)
+        super().__init__(equation, index)
         self.operator = '&'
         self.equation = equation
         self.index = index
@@ -179,7 +177,7 @@ class Average(Operator):
     """
 
     def __init__(self, equation: str, index: int):
-        super().__init__(self)
+        super().__init__(equation, index)
         self.operator = '@'
         self.equation = equation
         self.index = index
@@ -198,7 +196,7 @@ class Negative(Operator):
     """
 
     def __init__(self, equation: str, index: int):
-        super().__init__(self)
+        super().__init__(equation, index)
         self.operator = '~'
         self.equation = equation
         self.index = index
@@ -217,7 +215,7 @@ class Factorial(Operator):
     """
 
     def __init__(self, equation: str, index: int):
-        super().__init__(self)
+        super().__init__(equation, index)
         self.operator = '!'
         self.equation = equation
         self.index = index
