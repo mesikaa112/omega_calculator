@@ -198,7 +198,7 @@ def check_factorial_validate(equation: str, index: int) -> bool:
     """
     if 0 <= index < len(equation):
         operand, char = substring_number(equation, index)
-        if not is_number(operand) or (is_number(char) and not is_negative_number(char)):
+        if (is_number(operand) and is_negative_number(operand)) or is_number(char):
             raise FactorialError()
         if not is_integer(operand):
             raise FactorialError()
@@ -244,3 +244,25 @@ def is_integer(operand: str) -> bool:
                 return True
             return False
     return True
+
+
+def check_brackets_validation(equation: str) -> bool:
+    """
+    This method checks the validation of the brackets in the equation.
+    :param: equation: the equation.
+    :return: True if the brackets are valid, False otherwise.
+    """
+    brackets_stack = []
+    # for each bracket in the equation
+    for char in equation:
+        # if the char is an opener, add it to the stack
+        if char == '(':
+            brackets_stack.append(OPENER_BRACKET)
+        elif char == ')':
+            # if the char is a closer, check if the stack is empty
+            if len(brackets_stack) == 0:
+                raise BracketsError()
+            else:
+                brackets_stack.pop()
+
+    return len(brackets_stck) == 0
