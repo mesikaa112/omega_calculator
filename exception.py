@@ -86,3 +86,10 @@ class InValidCharsError(Error):
     def __init__(self, message="\nthere is an ERROR! you entered invalid characters"):
         self.message = message
         super().__init__(self.message)
+
+
+class BracketsError(Error):
+    def __init__(self, message="\nthere is an ERROR! the brackets are the cause"):
+        self.message = message
+        super().__init__(self.message)
+
