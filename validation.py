@@ -1,4 +1,4 @@
-from substring_number import substring_number, is_number, is_negative_number, substring_float_to_int
+# from substring_number import substring_number, is_number, is_negative_number, substring_float_to_int
 from exception import *
 from const import *
 
@@ -65,7 +65,6 @@ def check_multiply_validate(equation: str, index: int) -> bool:
     """
     if 0 < index < (len(equation) - 1):
         operand1, operand2 = substring_number(equation, index)
-        print(operand1, operand2)
         if (not is_number(operand1)) or (not is_number(operand2)):
             raise MultiplyError()
         return True
@@ -170,7 +169,7 @@ def check_average_validate(equation: str, index: int) -> bool:
             raise AverageError()
         return True
     else:
-        raise IndexError("the index is not valid")
+        raise AverageError()
 
 
 def check_negative_validate(equation: str, index: int) -> bool:
@@ -266,3 +265,65 @@ def check_brackets_validation(equation: str) -> bool:
                 brackets_stack.pop()
 
     return len(brackets_stck) == 0
+
+
+def is_unary_minus(equation: str, first_minus_index: int) -> int:
+    if first_minus_index == 0:
+        return True
+    if 0 < first_minus_index < (len(equation) - 1):
+        if is_number(equation[first_minus_index - 1]):
+            return False
+    else:
+        raise MinusError
+    return True
+
+
+def is_number(operand: str) -> bool:
+    """
+    the method check if a string can be a number (float number) or not
+    :param operand: string
+    :return: True if a string can be a number and False if not
+    """
+    return operand.isdigit() or is_float_number(operand, operand.find('.')) or operand[1:].isdigit()
+
+
+
+def has_between_two_key(char: str) -> bool:
+    """
+    this method checks if the char is in BETWEEN_TWO_OPERATORS dict
+    :param char: char in str type
+    :return: the method returns True if the operator is in BETWEEN_TWO_OPERATORS dict, otherwise False
+    """
+    for key in BETWEEN_TWO_OPERATORS.keys():
+        if char == key:
+            return True
+    return False
+
+
+def has_between_one_key(char: str) -> (bool, str):
+    """
+    this method checks if the char is in BETWEEN_ONE_OPERATORS dict
+    :param char: char in str type
+    :return: 'right' if the operator is need to be from right to operand and 'left' if ot should be fro his right,
+             in addition, the method returns True if the operator is in BETWEEN_ONE_OPERATORS dict, otherwise False
+    """
+    for key in BETWEEN_ONE_OPERATORS.keys():
+        if char == key:
+            if char == '!':
+                side = "right"
+            else:
+                side = "left"
+            return True, side
+    return False, None
+
+
+def is_float_number(equation: str, index: int) -> bool:
+    """
+    this method checks if a number
+    :param equation: the equation in str type
+    :param index: the index of the operator that used for calculate the specified calculation
+    :return: the index of the last number of the calculation in the equation
+    """
+    if 0 < index < (len(equation) - 1) and equation[index] == '.':
+        return equation[index - 1].isdigit() and equation[index + 1].isdigit()
+    return False

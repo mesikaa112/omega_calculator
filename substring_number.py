@@ -1,4 +1,5 @@
 from const import *
+from validation import is_unary_minus
 
 
 def is_operator2_negative_number(equation: str, index: int, buff: int) -> bool:
@@ -32,27 +33,39 @@ def if_only_negative_sign(operand: str) -> bool:
     return operand == '-'
 
 
-def remove_duplicated_minuses(operand: str) -> str:
+def remove_duplicated_minuses(equation: str) -> str:
     """
     this method remove from a number his duplicated minuses
-    :param operand: the number in str type
+    :param equation: the number in str type
     :return: the operand with 1 or 0 minuses
     """
-    index = 0
+    last_minus_index = 0
     countNegatives = 0
-    while index < (len(operand) - 1):
-        if operand[index] == '-':
-            countNegatives += 1
+    while last_minus_index < (len(equation) - 1):
+        if equation[last_minus_index] == '-':
+            first_minus_index = last_minus_index
+            while last_minus_index < (len(equation) - 1) and equation[last_minus_index] == '-':
+                last_minus_index += 1
+                countNegatives += 1
+            last_minus_index -= 1
+            equation = replace_minuses(equation, first_minus_index, last_minus_index, countNegatives)
+            last_minus_index = first_minus_index + 1
+            countNegatives = 0
         else:
-            break
-        index += 1
-    if countNegatives == 0:
-        return operand
+            last_minus_index += 1
+    return equation
+
+
+def replace_minuses(equation: str, first_minus_index: int, last_minus_index: int, countNegatives: int) -> str:
     if countNegatives % 2 == 0:
-        operand = operand[index:]
+        # if is unary minus, delete all the minuses else replace all the minuses with plus sign
+        if is_unary_minus(equation, first_minus_index):\
+            return equation[:first_minus_index] + equation[last_minus_index + 1:]
+        else:
+            return equation[:first_minus_index] + '+' + equation[last_minus_index + 1:]
+    # replace all the minuses with one minus
     else:
-        operand = '-' + operand[index:]
-    return operand
+        return equation[:first_minus_index] + equation[last_minus_index:]
 
 
 def is_negative_number(operand: str) -> bool:
@@ -86,27 +99,6 @@ def remove_negative_sign(operand: str) -> str:
     return new_str
 
 
-def is_float_number(equation: str, index: int) -> bool:
-    """
-    this method checks if a number
-    :param equation: the equation in str type
-    :param index: the index of the operator that used for calculate the specified calculation
-    :return: the index of the last number of the calculation in the equation
-    """
-    if 0 < index < (len(equation) - 1) and equation[index] == '.':
-        return equation[index - 1].isdigit() and equation[index + 1].isdigit()
-    return False
-
-
-def is_number(operand: str) -> bool:
-    """
-    the method check if a string can be a number (float number) or not
-    :param operand: string
-    :return: True if a string can be a number and False if not
-    """
-    return operand.isdigit() or is_float_number(operand, operand.find('.')) or operand[1:].isdigit()
-
-
 def substring_number(equation: str, index: int) -> (str, str):
     """
     this method substring from the equation the operands between the operator
@@ -123,7 +115,7 @@ def substring_number(equation: str, index: int) -> (str, str):
     while (index - buff) >= 0 and is_operator1_negative_number(equation, index, buff):
         operand1 = equation[index - buff] + operand1
         buff += 1
-    operand1 = remove_duplicated_minuses(operand1)
+    operand1 = remove_duplicated_minuses(equation, operand1)
     buff = 1
     while (index + buff) < len(equation) and is_operator2_negative_number(equation, index, buff):
         operand2 += equation[index + buff]
@@ -131,7 +123,7 @@ def substring_number(equation: str, index: int) -> (str, str):
     while (index + buff) < len(equation) and (is_number(equation[index + buff]) or is_float_number(equation, (index + buff))):
         operand2 += equation[index + buff]
         buff += 1
-    operand2 = remove_duplicated_minuses(operand2)
+    operand2 = remove_duplicated_minuses(equation, operand2)
     if if_only_negative_sign(operand2):
         operand2 = ''
     if if_only_negative_sign(operand1):
@@ -139,7 +131,7 @@ def substring_number(equation: str, index: int) -> (str, str):
     return operand1, operand2
 
 
-def substring_spaces(equation: str) -> str:
+def substring_invalid_characters(equation: str) -> str:
     """
     this method substring from the equation all the spaces
     :param equation: the equation in str type
@@ -147,7 +139,7 @@ def substring_spaces(equation: str) -> str:
     """
     new_str = ""
     for char in equation:
-        if not char.isspace():
+        if char not in INVALID_CHARACTERS:
             new_str = new_str + char
     return new_str
 
@@ -214,35 +206,6 @@ def add_result_to_equation(equation: str, result: float, index: int) -> str:
     equation = first_part_equation + str(result) + second_part_equation
 
     return equation
-
-
-def has_between_two_key(char: str) -> bool:
-    """
-    this method checks if the char is in BETWEEN_TWO_OPERATORS dict
-    :param char: char in str type
-    :return: the method returns True if the operator is in BETWEEN_TWO_OPERATORS dict, otherwise False
-    """
-    for key in BETWEEN_TWO_OPERATORS.keys():
-        if char == key:
-            return True
-    return False
-
-
-def has_between_one_key(char: str) -> (bool, str):
-    """
-    this method checks if the char is in BETWEEN_ONE_OPERATORS dict
-    :param char: char in str type
-    :return: 'right' if the operator is need to be from right to operand and 'left' if ot should be fro his right,
-             in addition, the method returns True if the operator is in BETWEEN_ONE_OPERATORS dict, otherwise False
-    """
-    for key in BETWEEN_ONE_OPERATORS.keys():
-        if char == key:
-            if char == '!':
-                side = "right"
-            else:
-                side = "left"
-            return True, side
-    return False, None
 
 
 def substring_float_to_int(operand: str) -> int:
