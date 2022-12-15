@@ -182,3 +182,29 @@ def factorial_calc(operand: int) -> int:
     for num in range(1, operand + 1):
         result *= num
     return result
+
+
+def sum_calculate(equation: list, index: int):
+    """
+    this method calculates the sum of a few operands
+    :param equation: the equation in str type
+    :param index: the index in the equation of the operator
+    :return: the result of the calculation in float type
+    """
+    if check_sum_validate(equation, index):
+        operand = substring_number(equation, index)[0]
+        if check_decimal_point_validate(operand):
+            return float(sum_calc(substring_float_to_int(operand)))
+        else:
+            raise SumError("\nthere is an ERROR! you can't do Sum on a float number")
+
+
+def sum_calc(operand: int) -> int:
+    """
+    this method calculates the sum of a few operands
+    :return: the result of the calculation
+    """
+    result = 0
+    for num in operand:
+        result += num
+    return result
