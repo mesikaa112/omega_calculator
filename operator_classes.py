@@ -226,3 +226,22 @@ class Factorial(Operator):
         :return: the result of the calculation
         """
         return fac_calculate(self.equation, self.index)
+
+
+class Sum(Operator):
+    """
+    this class presents the Sum class
+    """
+
+    def __init__(self, equation: str, index: int):
+        super().__init__(equation, index)
+        self.operator = '#'
+        self.equation = equation
+        self.index = index
+
+    def calculate(self) -> float:
+        """
+        this method calculates the Sum of a few operands by using the relevant function
+        :return: the result of the calculation
+        """
+        return sum_calculate(self.equation, self.index)
