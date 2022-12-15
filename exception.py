@@ -70,6 +70,12 @@ class FactorialError(Error):
         super().__init__(self.message)
 
 
+class SumError(Error):
+    def __init__(self, message="\nthere is an ERROR! the sum sign is the cause"):
+        self.message = message
+        super().__init__(self.message)
+
+
 class EmptyInputError(Error):
     def __init__(self, message="\nthere is an ERROR! you entered an empty equation"):
         self.message = message
