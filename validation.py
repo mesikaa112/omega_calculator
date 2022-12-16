@@ -1,18 +1,18 @@
 # from substring_number import substring_number, is_number, is_negative_number, substring_float_to_int
 from exception import *
 from const import *
+from operator_classes import *
 
 
-def check_plus_validate(equation: str, index: int) -> bool:
+def check_plus_validate(equation: list, index: int) -> bool:
     """
     this method check the validation of plus sign
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: True if the sigh is valid
     """
     if 0 < index < (len(equation) - 1):
         operand1, operand2 = substring_number(equation, index)
-        print(operand1, operand2)
         if (not is_number(operand1)) or (not is_number(operand2)):
             raise PlusError()
         return True
@@ -20,10 +20,10 @@ def check_plus_validate(equation: str, index: int) -> bool:
         raise IndexError("the index is not valid")
 
 
-def check_unary_minus_validate(equation: str, index: int) -> bool:
+def check_unary_minus_validate(equation: list, index: int) -> bool:
     """
     this method check the validation of unary minus sign
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: True if the unary minus is valid, False otherwise
     """
@@ -38,10 +38,10 @@ def check_unary_minus_validate(equation: str, index: int) -> bool:
         return False
 
 
-def check_minus_validate(equation: str, index: int) -> bool:
+def check_minus_validate(equation: list, index: int) -> bool:
     """
     this method check the validation of minus sign
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: True if the sigh is valid
     """
@@ -56,10 +56,10 @@ def check_minus_validate(equation: str, index: int) -> bool:
         raise IndexError("the index is not valid")
 
 
-def check_multiply_validate(equation: str, index: int) -> bool:
+def check_multiply_validate(equation: list, index: int) -> bool:
     """
     this method check the validation of multiply sign
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: True if the sigh is valid
     """
@@ -72,10 +72,10 @@ def check_multiply_validate(equation: str, index: int) -> bool:
         raise IndexError("the index is not valid")
 
 
-def check_divide_validate(equation: str, index: int) -> bool:
+def check_divide_validate(equation: list, index: int) -> bool:
     """
     this method check the validation of divide sign
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: True if the sigh is valid
     """
@@ -90,10 +90,10 @@ def check_divide_validate(equation: str, index: int) -> bool:
         raise IndexError("the index is not valid")
 
 
-def check_power_validate(equation: str, index: int) -> bool:
+def check_power_validate(equation: list, index: int) -> bool:
     """
     this method check the validation of power sign
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: True if the sigh is valid
     """
@@ -106,10 +106,10 @@ def check_power_validate(equation: str, index: int) -> bool:
         raise IndexError("the index is not valid")
 
 
-def check_modulo_validate(equation: str, index: int) -> bool:
+def check_modulo_validate(equation: list, index: int) -> bool:
     """
     this method check the validation of modulo sign
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: True if the sigh is valid
     """
@@ -124,10 +124,10 @@ def check_modulo_validate(equation: str, index: int) -> bool:
         raise IndexError("the index is not valid")
 
 
-def check_maximum_validate(equation: str, index: int) -> bool:
+def check_maximum_validate(equation: list, index: int) -> bool:
     """
     this method check the validation of maximum sign
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: True if the sigh is valid
     """
@@ -140,10 +140,10 @@ def check_maximum_validate(equation: str, index: int) -> bool:
         raise IndexError("the index is not valid")
 
 
-def check_minimum_validate(equation: str, index: int) -> bool:
+def check_minimum_validate(equation: list, index: int) -> bool:
     """
     this method check the validation of minimum sign
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: True if the sigh is valid
     """
@@ -156,10 +156,10 @@ def check_minimum_validate(equation: str, index: int) -> bool:
         raise IndexError("the index is not valid")
 
 
-def check_average_validate(equation: str, index: int) -> bool:
+def check_average_validate(equation: list, index: int) -> bool:
     """
     this method check the validation of average sign
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: True if the sigh is valid
     """
@@ -172,10 +172,10 @@ def check_average_validate(equation: str, index: int) -> bool:
         raise AverageError()
 
 
-def check_negative_validate(equation: str, index: int) -> bool:
+def check_negative_validate(equation: list, index: int) -> bool:
     """
     this method check the validation of negative sign
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: True if the sigh is valid
     """
@@ -188,10 +188,28 @@ def check_negative_validate(equation: str, index: int) -> bool:
         raise IndexError("the index is not valid")
 
 
-def check_factorial_validate(equation: str, index: int) -> bool:
+def check_factorial_validate(equation: list, index: int) -> bool:
     """
     this method check the validation of factorial sign
-    :param equation: the equation in str type
+    :param equation: the equation in list type
+    :param index: the index in the equation of the operator
+    :return: True if the sigh is valid
+    """
+    if 0 <= index < len(equation):
+        operand, char = substring_number(equation, index)
+        if (is_number(operand) and is_negative_number(operand)) or is_number(char):
+            raise FactorialError()
+        if not is_integer(operand):
+            raise FactorialError()
+        return True
+    else:
+        raise IndexError("the index is not valid")
+
+
+def check_sum_validate(equation: list, index: int) -> bool:
+    """
+    this method check the validation of a sum sign
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: True if the sigh is valid
     """
@@ -245,10 +263,35 @@ def is_integer(operand: str) -> bool:
     return True
 
 
-def check_brackets_validation(equation: str) -> bool:
+def check_brackets_validation(equation: list, index: int) -> bool:
+    """
+    this method checks if the bracket is valid
+    :param equation: the equation in list type
+    :param index: the index in the list of the bracket
+    :return: True if the bracket is valid, otherwise raise BracketsError
+    """
+    # if the amount of the brackets is not valid, raise BracketsError
+    if not check_brackets_amount_validation(equation):
+        raise BracketsError()
+    if equation[index] == '(':
+        # if from the left to the ( there is not an operator, raise BracketsError, else the bracket is valid
+        if equation[index - 1] not in OPERATORS_LIST:
+            raise BracketsError()
+        else:
+            return True
+    # if the equation[index] is ')'
+    else:
+        # if from the left to the ( there is not an operator, raise BracketsError, else the bracket is valid
+        if equation[index + 1] not in OPERATORS_LIST:
+            raise BracketsError()
+        else:
+            return True
+
+
+def check_brackets_amount_validation(equation: list) -> bool:
     """
     This method checks the validation of the brackets in the equation.
-    :param: equation: the equation.
+    :param: equation: the equation in list type
     :return: True if the brackets are valid, False otherwise.
     """
     brackets_stack = []
@@ -278,14 +321,17 @@ def is_unary_minus(equation: str, first_minus_index: int) -> int:
     return True
 
 
-def is_number(operand: str) -> bool:
+def is_number(char: str) -> bool:
     """
     the method check if a string can be a number (float number) or not
-    :param operand: string
+    :param char: string
     :return: True if a string can be a number and False if not
     """
-    return operand.isdigit() or is_float_number(operand, operand.find('.')) or operand[1:].isdigit()
+    return char.isdigit() or char == '.' or is_float_number(char)
 
+
+def is_char_in_number(char: str) -> bool:
+    return char.isdigit() or char == '.' or char == '-'
 
 
 def has_between_two_key(char: str) -> bool:
@@ -317,13 +363,60 @@ def has_between_one_key(char: str) -> (bool, str):
     return False, None
 
 
-def is_float_number(equation: str, index: int) -> bool:
+def is_float_number(operand: str) -> bool:
     """
-    this method checks if a number
-    :param equation: the equation in str type
-    :param index: the index of the operator that used for calculate the specified calculation
+    this method checks if a number is a float number
+    :param operand: the equation in str type
     :return: the index of the last number of the calculation in the equation
     """
-    if 0 < index < (len(equation) - 1) and equation[index] == '.':
-        return equation[index - 1].isdigit() and equation[index + 1].isdigit()
+    index = 0
+    for char in operand:
+        if char == '.':
+            if 0 < index < len(operand) - 1 and operand[index - 1].isdigit() and \
+                    operand[index + 1].isdigit() and check_decimal_point_validate(operand):
+                return True
+            return False
+        index += 1
     return False
+
+
+# def check_equation_validation(equation_list: list):
+#     index = 0
+#     for item in equation_list:
+#         if item in OPERATORS_LIST:
+#             operator = get_operator()
+
+
+def get_operator(equation: str, operator: str, index: int) -> Operator:
+    """
+    this method find which operator is the operator in the str type and return an object of it
+    :param equation: the equation in str type
+    :param operator: operator in str type
+    :param index: the index of the operator in the equation
+    :return: an operator object that suits to the operator
+    """
+    if operator == '+':
+        operator = Plus(equation, index)
+    elif operator == '-':
+        operator = Minus(equation, index)
+    elif operator == '*':
+        operator = Multiply(equation, index)
+    elif operator == '/':
+        operator = Divide(equation, index)
+    elif operator == '^':
+        operator = Power(equation, index)
+    elif operator == '%':
+        operator = Modulo(equation, index)
+    elif operator == '$':
+        operator = Maximum(equation, index)
+    elif operator == '&':
+        operator = Minimum(equation, index)
+    elif operator == '@':
+        operator = Average(equation, index)
+    elif operator == '~':
+        operator = Negative(equation, index)
+    elif operator == '!':
+        operator = Factorial(equation, index)
+    elif operator == '#':
+        operator = Sum(equation, index)
+    return operator
