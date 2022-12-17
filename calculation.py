@@ -2,10 +2,10 @@ from math import pow
 from validation import *
 
 
-def plus_calculate(equation: str, index: int) -> float:
+def plus_calculate(equation: list, index: int) -> float:
     """
     this method calculates the addition between two operands
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: the result of the calculation in float type
     """
@@ -17,10 +17,10 @@ def plus_calculate(equation: str, index: int) -> float:
             raise DecimalPointError()
 
 
-def minus_calculate(equation: str, index: int) -> float:
+def minus_calculate(equation: list, index: int) -> float:
     """
     this method calculates the subtraction between two operands
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: the result of the calculation in float type
     """
@@ -32,10 +32,10 @@ def minus_calculate(equation: str, index: int) -> float:
             raise DecimalPointError()
 
 
-def mul_calculate(equation: str, index: int) -> float:
+def mul_calculate(equation: list, index: int) -> float:
     """
     this method calculates the multiply between two operands
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: the result of the calculation in float type
     """
@@ -47,10 +47,10 @@ def mul_calculate(equation: str, index: int) -> float:
             raise DecimalPointError()
 
 
-def div_calculate(equation: str, index: int) -> float:
+def div_calculate(equation: list, index: int) -> float:
     """
     this method calculates the division between two operands
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: the result of the calculation in float type
     """
@@ -62,10 +62,10 @@ def div_calculate(equation: str, index: int) -> float:
             raise DecimalPointError()
 
 
-def pow_calculate(equation: str, index: int) -> float:
+def pow_calculate(equation: list, index: int) -> float:
     """
     this method calculates the power between two operands
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: the result of the calculation in float type
     """
@@ -77,10 +77,10 @@ def pow_calculate(equation: str, index: int) -> float:
             raise DecimalPointError()
 
 
-def mod_calculate(equation: str, index: int) -> float:
+def mod_calculate(equation: list, index: int) -> float:
     """
     this method calculates the modulo between two operands
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: the result of the calculation in float type
     """
@@ -92,10 +92,10 @@ def mod_calculate(equation: str, index: int) -> float:
             raise DecimalPointError()
 
 
-def max_calculate(equation: str, index: int) -> float:
+def max_calculate(equation: list, index: int) -> float:
     """
     this method calculates the maximum between two operands
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: the result of the calculation in float type
     """
@@ -110,10 +110,10 @@ def max_calculate(equation: str, index: int) -> float:
             raise DecimalPointError()
 
 
-def min_calculate(equation: str, index: int) -> float:
+def min_calculate(equation: list, index: int) -> float:
     """
     this method calculates the minimum between two operands
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: the result of the calculation in float type
     """
@@ -128,10 +128,10 @@ def min_calculate(equation: str, index: int) -> float:
             raise DecimalPointError()
 
 
-def avg_calculate(equation: str, index: int) -> float:
+def avg_calculate(equation: list, index: int) -> float:
     """
     this method calculates the average between two operands
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: the result of the calculation in float type
     """
@@ -143,10 +143,10 @@ def avg_calculate(equation: str, index: int) -> float:
             raise DecimalPointError()
 
 
-def neg_calculate(equation: str, index: int) -> float:
+def neg_calculate(equation: list, index: int) -> float:
     """
     this method calculates the negative of an operand
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: the result of the calculation in float type
     """
@@ -158,10 +158,10 @@ def neg_calculate(equation: str, index: int) -> float:
             raise DecimalPointError()
 
 
-def fac_calculate(equation: str, index: int) -> float:
+def fac_calculate(equation: list, index: int) -> float:
     """
     this method calculates the factorial of an operand
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: the result of the calculation in float type
     """
@@ -187,7 +187,7 @@ def factorial_calc(operand: int) -> int:
 def sum_calculate(equation: list, index: int):
     """
     this method calculates the sum of a few operands
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: the result of the calculation in float type
     """
@@ -204,7 +204,16 @@ def sum_calc(operand: int) -> int:
     this method calculates the sum of a few operands
     :return: the result of the calculation
     """
+    str_operand = str(operand)
+    if str_operand[0] == '-':
+        str_operand = str_operand[1:]
     result = 0
-    for num in operand:
-        result += num
+    for num in str_operand:
+        result += int(num)
     return result
+
+
+def calculate_sub_equation(operand1: str, operator: str, operand2: str) -> float:
+    sub_equation = [operand1, operator, operand2]
+    operator = get_operator(sub_equation, operator, 1)
+    return operator.calculate()
