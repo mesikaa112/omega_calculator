@@ -134,6 +134,20 @@ def check_average_validate(operand1: str, operand2: str) -> bool:
     return True
 
 
+def check_negative_validation(equation: list):
+    index = 0
+    count_tilde = 0
+    while index < len(equation):
+        while index < len(equation) and ((not is_number(equation[index])) or equation[index] == '('):
+            if equation[index] == '~':
+                count_tilde += 1
+            index += 1
+        if count_tilde > 1:
+            raise NegativeError()
+        count_tilde = 0
+        index += 1
+
+
 def check_factorial_validate(operand: str) -> bool:
     """
     this method check the validation of factorial sign
@@ -258,6 +272,8 @@ def check_between_one_operands_validation(operand1: str, operand2: str, operator
 
 
 def check_equation_validation(equation_list: list):
+    # check if the ~ in the equation is valid
+    check_negative_validation(equation_list)
     # if equation is empty
     if not equation_list:
         raise EmptyInputError()
