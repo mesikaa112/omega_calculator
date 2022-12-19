@@ -285,7 +285,3 @@ def check_equation_validation(equation_list: list):
     # if the equation contains invalid characters
     if not check_vaild_chars(equation_list):
         raise InValidCharsError()
-
-if __name__ == '__main__':
-    q = "2.344"
-    print(check_sum_validate(q))

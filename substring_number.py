@@ -240,6 +240,7 @@ def is_float_number(operand: str) -> bool:
     :return: the index of the last number of the calculation in the equation
     """
     index = 0
+    # check_decimal_point_validate(operand)
     for char in operand:
         if char == '.':
             if 0 < index < len(operand) - 1 and operand[index - 1].isdigit() and \
@@ -260,7 +261,9 @@ def check_decimal_point_validate(operand: str) -> bool:
     for char in operand:
         if char == '.':
             count_points += 1
-    return count_points < 2
+    if count_points > 1:
+        raise DecimalPointError()
+    return True
 
 
 def is_unary_minus(equation: str, first_minus_index: int) -> bool:
