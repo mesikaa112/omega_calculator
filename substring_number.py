@@ -147,7 +147,7 @@ def add_equation_to_list(equation: str) -> list:
     is_first_number = True
     index = 0
     for char in equation:
-        validation.check_brackets_validation(equation_list, index)
+        validation.check_brackets_validation(equation_list, index, equation)
         # if the char is a number or '.'
         if is_number(char) or (char == '-' and is_unary_minus(equation, index)):
             # if this is the first char in the number

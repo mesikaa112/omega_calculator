@@ -44,7 +44,7 @@ def start_calculation():
         except EmptyInputError as error:
             print(error)
         except IndexError as error:
-            print(error)
+            print("there is an ERROR! the result is too big")
         except DecimalPointError as error:
             print(error)
         except InValidCharsError as error:

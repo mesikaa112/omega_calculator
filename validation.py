@@ -206,32 +206,35 @@ def is_integer(operand: str) -> bool:
     return True
 
 
-def check_brackets_validation(equation: list, index: int) -> bool:
+def check_brackets_validation(equation_list: list, index: int, equation: str) -> bool:
     """
     this method checks if the bracket is valid
-    :param equation: the equation in list type
+    :param equation_list: the equation in list type
     :param index: the index in the list of the bracket
+    :param equation: the equation in str type
     :return: True if the bracket is valid, otherwise raise BracketsError
     """
     # if the amount of the brackets is not valid, raise BracketsError
     if not check_brackets_amount_validation(equation):
         raise BracketsError()
-    if equation != [] and equation[index - 1] == '(':
+    if equation_list != [] and equation_list[-1] == '(':
         # if from the left to the ( there is not an operator, raise BracketsError, else the bracket is valid
-        if index > 0 and equation[index - 2] not in OPERATORS_LIST:
+        if index > 0 and equation_list[-1] not in OPERATORS_LIST:
             raise BracketsError()
         else:
             return True
     # if the equation[index] is ')'
-    else:
+    elif equation_list != [] and equation_list[-1] == ')':
         # if from the left to the ( there is not an operator, raise BracketsError, else the bracket is valid
-        if equation != [] and index < (len(equation) - 1) and equation[index + 1] not in OPERATORS_LIST:
+        if equation_list != [] and index < (len(equation_list) - 1) and equation_list[index] not in OPERATORS_LIST:
             raise BracketsError()
         else:
             return True
+    else:
+        return True
 
 
-def check_brackets_amount_validation(equation: list) -> bool:
+def check_brackets_amount_validation(equation: str) -> bool:
     """
     This method checks the validation of the brackets in the equation.
     :param: equation: the equation in list type
