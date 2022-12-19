@@ -172,7 +172,7 @@ def check_sum_validate(operand: str) -> bool:
     :param operand: the operand in str type
     :return: True if the sigh is valid
     """
-    if not is_number(operand) and operand != ')' or not is_integer(operand):
+    if not is_number(operand) and operand != ')':
         raise SumError()
     return True
 
@@ -286,3 +286,6 @@ def check_equation_validation(equation_list: list):
     if not check_vaild_chars(equation_list):
         raise InValidCharsError()
 
+if __name__ == '__main__':
+    q = "2.344"
+    print(check_sum_validate(q))

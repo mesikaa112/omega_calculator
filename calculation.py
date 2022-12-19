@@ -162,7 +162,7 @@ def sum_calculate(operand: str):
     :return: the result of the calculation in float type
     """
     if check_decimal_point_validate(operand):
-        return float(sum_calc(substring_float_to_int(operand)))
+        return float(sum_calc(operand))
     else:
         raise SumError("\nthere is an ERROR! you can't do Sum on a float number")
 
@@ -179,6 +179,8 @@ def sum_calc(operand: int) -> int:
         is_neg_number = True
     result = 0
     for num in str_operand:
+        if num == '.':
+            continue
         result += int(num)
     if is_neg_number:
         result *= -1
@@ -197,10 +199,7 @@ def calculate_sub_equation(operand1: str, operator: str, operand2: str) -> float
     operator_class = get_operator(sub_equation, operator, 1)
     calculation_func = operator_class.calculate()
     if operator in BETWEEN_ONE_OPERATORS:
-        if BETWEEN_ONE_OPERATORS.get(operator) == "left":
-            return calculation_func(operand2)
-        else:
-            return calculation_func(operand1)
+        return calculation_func(operand1)
 
     if operator in BETWEEN_TWO_OPERATORS:
         return calculation_func(operand1, operand2)
