@@ -1,3 +1,5 @@
+import validation
+import calculation
 from calculation import *
 
 
@@ -18,15 +20,6 @@ class Operator:
         """
         return None
 
-    def validation(self, equation_list: list, index: int) -> bool:
-        """
-        this method is the method that overrides in the operators classes
-        :param equation_list: equation in list type
-        :param index: the index of the operator
-        :return: True
-        """
-        return True
-
 
 class Plus(Operator):
     """
@@ -39,21 +32,12 @@ class Plus(Operator):
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates operand1 plus operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return plus_calculate(self.equation, self.index)
-
-    def validation(self, equation_list: list, index: int) -> bool:
-        """
-        this method checks if the plus sign is validate by using the relevant operator
-        :param equation_list: equation in list type
-        :param index: the index of the operator
-        :return: True if the plus sign is validate, False otherwise
-        """
-        return check_plus_validate(equation_list, index)
+        return calculation.plus_calculate
 
 
 class Minus(Operator):
@@ -67,21 +51,12 @@ class Minus(Operator):
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates operand1 minus operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return minus_calculate(self.equation, self.index)
-
-    def validation(self, equation_list: list, index: int) -> bool:
-        """
-        this method checks if the minus sign is validate by using the relevant operator
-        :param equation_list: equation in list type
-        :param index: the index of the operator
-        :return: True if the minus sign is validate, False otherwise
-        """
-        return check_minus_validate(equation_list, index)
+        return calculation.minus_calculate
 
 
 class Multiply(Operator):
@@ -95,21 +70,12 @@ class Multiply(Operator):
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates operand1 Multiply operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return mul_calculate(self.equation, self.index)
-
-    def validation(self, equation_list: list, index: int) -> bool:
-        """
-        this method checks if the multiply sign is validate by using the relevant operator
-        :param equation_list: equation in list type
-        :param index: the index of the operator
-        :return: True if the multiply sign is validate, False otherwise
-        """
-        return check_multiply_validate(equation_list, index)
+        return calculation.mul_calculate
 
 
 class Divide(Operator):
@@ -123,21 +89,12 @@ class Divide(Operator):
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates operand1 divide operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return div_calculate(self.equation, self.index)
-
-    def validation(self, equation_list: list, index: int) -> bool:
-        """
-        this method checks if the divide sign is validate by using the relevant operator
-        :param equation_list: equation in list type
-        :param index: the index of the operator
-        :return: True if the divide sign is validate, False otherwise
-        """
-        return check_divide_validate(equation_list, index)
+        return calculation.div_calculate
 
 
 class Power(Operator):
@@ -151,21 +108,12 @@ class Power(Operator):
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates operand1 Power operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return pow_calculate(self.equation, self.index)
-
-    def validation(self, equation_list: list, index: int) -> bool:
-        """
-        this method checks if the power sign is validate by using the relevant operator
-        :param equation_list: equation in list type
-        :param index: the index of the operator
-        :return: True if the power sign is validate, False otherwise
-        """
-        return check_power_validate(equation_list, index)
+        return calculation.pow_calculate
 
 
 class Modulo(Operator):
@@ -179,21 +127,12 @@ class Modulo(Operator):
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates operand1 Modulo operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return mod_calculate(self.equation, self.index)
-
-    def validation(self, equation_list: list, index: int) -> bool:
-        """
-        this method checks if the modulo sign is validate by using the relevant operator
-        :param equation_list: equation in list type
-        :param index: the index of the operator
-        :return: True if the modulo sign is validate, False otherwise
-        """
-        return check_modulo_validate(equation_list, index)
+        return calculation.mod_calculate
 
 
 class Maximum(Operator):
@@ -207,21 +146,12 @@ class Maximum(Operator):
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates the Maximum from operand1 and operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return max_calculate(self.equation, self.index)
-
-    def validation(self, equation_list: list, index: int) -> bool:
-        """
-        this method checks if the maximum sign is validate by using the relevant operator
-        :param equation_list: equation in list type
-        :param index: the index of the operator
-        :return: True if the maximum sign is validate, False otherwise
-        """
-        return check_maximum_validate(equation_list, index)
+        return calculation.max_calculate
 
 
 class Minimum(Operator):
@@ -235,21 +165,12 @@ class Minimum(Operator):
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates the Minimum from operand1 and operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return min_calculate(self.equation, self.index)
-
-    def validation(self, equation_list: list, index: int) -> bool:
-        """
-        this method checks if the minimum sign is validate by using the relevant operator
-        :param equation_list: equation in list type
-        :param index: the index of the operator
-        :return: True if the minimum sign is validate, False otherwise
-        """
-        return check_minimum_validate(equation_list, index)
+        return calculation.min_calculate
 
 
 class Average(Operator):
@@ -263,21 +184,12 @@ class Average(Operator):
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates the Average from operand1 and operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return avg_calculate(self.equation, self.index)
-
-    def validation(self, equation_list: list, index: int) -> bool:
-        """
-        this method checks if the average sign is validate by using the relevant operator
-        :param equation_list: equation in list type
-        :param index: the index of the operator
-        :return: True if the average sign is validate, False otherwise
-        """
-        return check_average_validate(equation_list, index)
+        return calculation.avg_calculate
 
 
 class Negative(Operator):
@@ -291,21 +203,12 @@ class Negative(Operator):
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates the Negative of operand by using the relevant function
         :return: the result of the calculation
         """
-        return neg_calculate(self.equation, self.index)
-
-    def validation(self, equation_list: list, index: int) -> bool:
-        """
-        this method checks if the negative sign is validate by using the relevant operator
-        :param equation_list: equation in list type
-        :param index: the index of the operator
-        :return: True if the negative sign is validate, False otherwise
-        """
-        return check_negative_validate(equation_list, index)
+        return calculation.neg_calculate
 
 
 class Factorial(Operator):
@@ -319,21 +222,12 @@ class Factorial(Operator):
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates the Factorial of operand by using the relevant function
         :return: the result of the calculation
         """
-        return fac_calculate(self.equation, self.index)
-
-    def validation(self, equation_list: list, index: int) -> bool:
-        """
-        this method checks if the factorial sign is validate by using the relevant operator
-        :param equation_list: equation in list type
-        :param index: the index of the operator
-        :return: True if the factorial sign is validate, False otherwise
-        """
-        return check_factorial_validate(equation_list, index)
+        return calculation.fac_calculate
 
 
 class Sum(Operator):
@@ -347,18 +241,9 @@ class Sum(Operator):
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates the Sum of a few operands by using the relevant function
         :return: the result of the calculation
         """
-        return sum_calculate(self.equation, self.index)
-
-    def validation(self, equation_list: list, index: int) -> bool:
-        """
-        this method checks if the sum sign is validate by using the relevant operator
-        :param equation_list: equation in list type
-        :param index: the index of the operator
-        :return: True if the sum sign is validate, False otherwise
-        """
-        return check_sum_validate(equation_list, index)
+        return calculation.sum_calculate

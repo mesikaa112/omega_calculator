@@ -1,4 +1,5 @@
 from operator_classes import *
+import validation
 
 
 def get_operator(equation: list, operator: str, index: int):
@@ -34,3 +35,43 @@ def get_operator(equation: list, operator: str, index: int):
     elif operator == '#':
         operator = Sum(equation, index)
     return operator
+
+
+def get_between_two_operator_validation(operator: str):
+    """
+    this method find the relevant function of validation for the operator
+    :param operator: the operator in str type
+    :return: the relevant function of validation for the operator
+    """
+    if operator == '+':
+        return validation.check_plus_validate
+    elif operator == '-':
+        return validation.check_minus_validate
+    elif operator == '*':
+        return validation.check_multiply_validate
+    elif operator == '/':
+        return validation.check_divide_validate
+    elif operator == '^':
+        return validation.check_power_validate
+    elif operator == '%':
+        return validation.check_modulo_validate
+    elif operator == '$':
+        return validation.check_maximum_validate
+    elif operator == '&':
+        return validation.check_minimum_validate
+    elif operator == '@':
+        return validation.check_average_validate
+
+
+def get_between_one_operator_validation(operator: str):
+    """
+    this method find the relevant function of validation for the operator
+    :param operator: the operator in str type
+    :return: the relevant function of validation for the operator
+    """
+    if operator == '~':
+        return validation.check_negative_validate
+    elif operator == '!':
+        return validation.check_factorial_validate
+    elif operator == '#':
+        return validation.check_sum_validate
