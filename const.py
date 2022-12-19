@@ -13,4 +13,4 @@ BETWEEN_TWO_OPERATORS = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3, '%': 4, '$': 5,
 BETWEEN_ONE_OPERATORS = {'!': "right", '#': "right"}
 VALID_CHARACTERS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '/', '!', '.', '@', '#', '$', '%', '^',
                     '&', '*', '(', ')', '~', ' '}
-INVALID_CHARACTERS = {' ', '\t', '\n'}
+INVALID_CHARACTERS = {' ', '\t', '\n', '\v', '\r', '\f'}

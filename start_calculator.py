@@ -51,6 +51,8 @@ def start_calculation():
             print(error)
         except MissingOperandError as error:
             print(error)
+        except BracketsError as error:
+            print(error)
         except ValueError as error:
             print(error)
         except EOFError as error:

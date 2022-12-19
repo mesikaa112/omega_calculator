@@ -216,16 +216,16 @@ def check_brackets_validation(equation: list, index: int) -> bool:
     # if the amount of the brackets is not valid, raise BracketsError
     if not check_brackets_amount_validation(equation):
         raise BracketsError()
-    if equation[index] == '(':
+    if equation != [] and equation[index - 1] == '(':
         # if from the left to the ( there is not an operator, raise BracketsError, else the bracket is valid
-        if index > 0 and equation[index - 1] not in OPERATORS_LIST:
+        if index > 0 and equation[index - 2] not in OPERATORS_LIST:
             raise BracketsError()
         else:
             return True
     # if the equation[index] is ')'
     else:
         # if from the left to the ( there is not an operator, raise BracketsError, else the bracket is valid
-        if index < len(equation) - 1 and equation[index + 1] not in OPERATORS_LIST:
+        if equation != [] and index < (len(equation) - 1) and equation[index + 1] not in OPERATORS_LIST:
             raise BracketsError()
         else:
             return True
