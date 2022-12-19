@@ -1,5 +1,6 @@
 from const import *
 from operator_classes import *
+from exception import *
 import validation
 
 
@@ -275,5 +276,5 @@ def is_unary_minus(equation: str, first_minus_index: int) -> bool:
         if is_number(equation[first_minus_index - 1]) or equation[first_minus_index - 1] == ')' or equation[first_minus_index - 1] in BETWEEN_ONE_OPERATORS:
             return False
     else:
-        raise MinusError
+        raise MinusError()
     return True
