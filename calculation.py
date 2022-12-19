@@ -80,7 +80,7 @@ def mod_calculate(operand1: str, operand2: str) -> float:
     """
     if check_decimal_point_validate(operand1) and check_decimal_point_validate(operand2):
         if operand2 != '0' and operand2 != '0.0':
-            return float(float(operand1) & float(operand2))
+            return float(float(operand1) % float(operand2))
         else:
             raise DivideError("There is an ERROR! you can't divide by zero")
     else:
@@ -95,7 +95,7 @@ def max_calculate(operand1: str, operand2: str) -> float:
     :return: the result of the calculation in float type
     """
     if check_decimal_point_validate(operand1) and check_decimal_point_validate(operand2):
-        if operand1 > operand2:
+        if float(operand1) > float(operand2):
             return float(operand1)
         else:
             return float(operand2)
@@ -111,7 +111,7 @@ def min_calculate(operand1: str, operand2: str) -> float:
     :return: the result of the calculation in float type
     """
     if check_decimal_point_validate(operand1) and check_decimal_point_validate(operand2):
-        if operand1 < operand2:
+        if float(operand1) < float(operand2):
             return float(operand1)
         else:
             return float(operand2)
@@ -173,11 +173,15 @@ def sum_calc(operand: int) -> int:
     :return: the result of the calculation
     """
     str_operand = str(operand)
+    is_neg_number = False
     if str_operand[0] == '-':
         str_operand = str_operand[1:]
+        is_neg_number = True
     result = 0
     for num in str_operand:
         result += int(num)
+    if is_neg_number:
+        result *= -1
     return result
 
 

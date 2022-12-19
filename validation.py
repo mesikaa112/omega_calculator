@@ -136,7 +136,12 @@ def check_average_validate(operand1: str, operand2: str) -> bool:
     return True
 
 
-def check_negative_validation(equation: list):
+def check_negative_validation(equation: str):
+    """
+    this method checks if there isn't more then 1 ~ before a number or (
+    :param equation: the equation is str type
+    :return: if there is an error, raise it
+    """
     index = 0
     count_tilde = 0
     while index < len(equation):
@@ -280,3 +285,4 @@ def check_equation_validation(equation_list: list):
     # if the equation contains invalid characters
     if not check_vaild_chars(equation_list):
         raise InValidCharsError()
+

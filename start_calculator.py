@@ -48,6 +48,8 @@ def start_calculation():
             print(error)
         except InValidCharsError as error:
             print(error)
+        except MissingOperandError as error:
+            print(error)
         except ValueError as error:
             print(error)
         except EOFError as error:
@@ -86,29 +88,27 @@ def calculate_postfix(equation: list) -> float:
         else:
             # if the operator is an operator that should be between 2 operands
             if item in BETWEEN_TWO_OPERATORS:
-                operand2 = operands_stack.pop()
-                operand1 = operands_stack.pop()
-                # check the validation of the operator
-                check_between_two_operands_validation(operand1, operand2, item)
-                # if the operator is valid, calculate
-                operands_stack.append(str(calculate_sub_equation(operand1, item, operand2)))
+                if len(operands_stack) >= 2:
+                    operand2 = operands_stack.pop()
+                    operand1 = operands_stack.pop()
+                    # check the validation of the operator
+                    check_between_two_operands_validation(operand1, operand2, item)
+                    # if the operator is valid, calculate
+                    operands_stack.append(str(calculate_sub_equation(operand1, item, operand2)))
+                else:
+                    raise MissingOperandError()
 
             # if the operator is an operator that should be between 1 operand
             else:
-                # if the operator should be from the left to the number
-                if BETWEEN_ONE_OPERATORS.get(item) == "left":
-                    operand2 = operands_stack.pop()
-                    # check the validation of the operator
-                    check_between_one_operands_validation(operand1, operand2, item)
-                    # if the operator is valid, calculate
-                    operands_stack.append(str(calculate_sub_equation(operand1, item, operand2)))
-                # if the operator should be from the right to the number
-                else:
+                if len(operands_stack) >= 1:
+                    # if the operator should be from the right to the number
                     operand1 = operands_stack.pop()
                     # check the validation of the operator
                     check_between_one_operands_validation(operand1, operand2, item)
                     # if the operator is valid, calculate
                     operands_stack.append(str(calculate_sub_equation(operand1, item, operand2)))
+                else:
+                    raise MissingOperandError()
         operand1 = ""
         operand2 = ""
     return operands_stack.pop()

@@ -272,7 +272,7 @@ def is_unary_minus(equation: str, first_minus_index: int) -> bool:
     if first_minus_index == 0:
         return True
     if 0 < first_minus_index < (len(equation) - 1):
-        if is_number(equation[first_minus_index - 1]) or equation[first_minus_index - 1] == ')':
+        if is_number(equation[first_minus_index - 1]) or equation[first_minus_index - 1] == ')' or equation[first_minus_index - 1] in BETWEEN_ONE_OPERATORS:
             return False
     else:
         raise MinusError
