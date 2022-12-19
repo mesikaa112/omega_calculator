@@ -99,3 +99,8 @@ class BracketsError(Error):
         self.message = message
         super().__init__(self.message)
 
+
+class MissingOperandError(Error):
+    def __init__(self, message="\nthere is an ERROR! the equation missing operand"):
+        self.message = message
+        super().__init__(self.message)
