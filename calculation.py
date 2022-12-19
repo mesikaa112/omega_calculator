@@ -162,7 +162,7 @@ def sum_calculate(operand: str):
     :return: the result of the calculation in float type
     """
     if check_decimal_point_validate(operand):
-        return float(sum_calc(operand))
+        return float(sum_calc(float(operand)))
     else:
         raise SumError("\nthere is an ERROR! you can't do Sum on a float number")
 
