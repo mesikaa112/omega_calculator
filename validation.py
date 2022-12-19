@@ -241,17 +241,21 @@ def check_brackets_amount_validation(equation: str) -> bool:
     :return: True if the brackets are valid, False otherwise.
     """
     brackets_stack = []
+    index = 0
     # for each bracket in the equation
     for char in equation:
         # if the char is an opener, add it to the stack
         if char == '(':
             brackets_stack.append(char)
+            if equation[index + 1] == ')':
+                raise BracketsError()
         elif char == ')':
             # if the char is a closer, check if the stack is empty
             if len(brackets_stack) == 0:
                 raise BracketsError()
             else:
                 brackets_stack.pop()
+        index += 1
 
     return len(brackets_stack) == 0
 
@@ -269,11 +273,25 @@ def has_between_two_key(char: str) -> bool:
 
 
 def check_between_two_operands_validation(operand1: str, operand2: str, operator: str):
+    """
+    this method check the validation of operators that should be between 2 operands
+    :param operand1: operand1 in str type
+    :param operand2: operand2 in str type
+    :param operator: operator in str type
+    :return: True if the operator is validate, Error otherwise
+    """
     validation_func = get_between_two_operator_validation(operator)
     return validation_func(operand1, operand2)
 
 
 def check_between_one_operands_validation(operand1: str, operand2: str, operator: str):
+    """
+    this method check the validation of operators that should be between 1 operand
+    :param operand1: operand1 in str type
+    :param operand2: operand2 in str type
+    :param operator: operator in str type
+    :return: True if the operator is validate, Error otherwise
+    """
     validation_func = get_between_one_operator_validation(operator)
     if BETWEEN_ONE_OPERATORS.get(operator) == "left":
         return validation_func(operand2)
@@ -282,6 +300,11 @@ def check_between_one_operands_validation(operand1: str, operand2: str, operator
 
 
 def check_equation_validation(equation_list: list):
+    """
+    this method checks the equation validate before his calculate
+    :param equation_list: the equation in list type
+    :return: if the equation is not valid, raise Error
+    """
     # if equation is empty
     if not equation_list:
         raise EmptyInputError()

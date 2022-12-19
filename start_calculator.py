@@ -76,7 +76,6 @@ def calculate(equation: str) -> float:
     equation_list = add_equation_to_list(equation)
     check_equation_validation(equation_list)
     equation_list = infix_to_postfix(equation_list)
-    print(equation_list)
     return calculate_postfix(equation_list)
 
 
