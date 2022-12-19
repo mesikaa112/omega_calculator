@@ -167,7 +167,7 @@ def sum_calculate(operand: str):
         raise SumError("\nthere is an ERROR! you can't do Sum on a float number")
 
 
-def sum_calc(operand: int) -> int:
+def sum_calc(operand: float) -> int:
     """
     this method calculates the sum of a few operands
     :return: the result of the calculation
