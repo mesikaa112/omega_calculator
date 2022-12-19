@@ -1,4 +1,4 @@
-from get_operator import *
+from get_operator_functions import *
 from exception import *
 from substring_number import *
 from const import *
