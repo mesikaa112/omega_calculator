@@ -132,18 +132,6 @@ def avg_calculate(operand1: str, operand2: str) -> float:
         raise DecimalPointError()
 
 
-def neg_calculate(operand: str) -> float:
-    """
-    this method calculates the negative of an operand
-    :param operand: the operand in str type
-    :return: the result of the calculation in float type
-    """
-    if check_decimal_point_validate(operand):
-        return float(-float(operand))
-    else:
-        raise DecimalPointError()
-
-
 def fac_calculate(operand: str) -> float:
     """
     this method calculates the factorial of an operand

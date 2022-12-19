@@ -192,25 +192,6 @@ class Average(Operator):
         return calculation.avg_calculate
 
 
-class Negative(Operator):
-    """
-    this class presents the Negative class
-    """
-
-    def __init__(self, equation: list, index: int):
-        super().__init__(equation, index)
-        self.operator = '~'
-        self.equation = equation
-        self.index = index
-
-    def calculate(self):
-        """
-        this method calculates the Negative of operand by using the relevant function
-        :return: the result of the calculation
-        """
-        return calculation.neg_calculate
-
-
 class Factorial(Operator):
     """
     this class presents the Factorial class

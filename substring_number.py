@@ -8,6 +8,8 @@ def remove_duplicated_minuses(equation: str) -> str:
     :param equation: the number in str type
     :return: the operand with 1 or 0 minuses
     """
+    # replace every ~ to a -
+    equation = check_for_tilde(equation)
     last_minus_index = 0
     count_negatives = 0
     while last_minus_index < (len(equation) - 1):
@@ -22,6 +24,20 @@ def remove_duplicated_minuses(equation: str) -> str:
             count_negatives = 0
         else:
             last_minus_index += 1
+    return equation
+
+
+def check_for_tilde(equation: str) -> str:
+    """
+    this function change every ~ operator to a -
+    :param equation: the equation in str type
+    :return: the equation without the ~
+    """
+    index = 0
+    for char in equation:
+        if char == '~':
+            equation = equation[:index] + '-' + equation[index + 1:]
+        index += 1
     return equation
 
 
@@ -244,10 +260,16 @@ def check_decimal_point_validate(operand: str) -> bool:
 
 
 def is_unary_minus(equation: str, first_minus_index: int) -> bool:
+    """
+    this method checks if the minus is unary or not
+    :param equation: the equation in str type
+    :param first_minus_index: the index in the equation of the leftest minus
+    :return: True if the minus is unary, False otherwise
+    """
     if first_minus_index == 0:
         return True
     if 0 < first_minus_index < (len(equation) - 1):
-        if is_number(equation[first_minus_index - 1]):
+        if is_number(equation[first_minus_index - 1]) or equation[first_minus_index - 1] == ')':
             return False
     else:
         raise MinusError

@@ -134,17 +134,6 @@ def check_average_validate(operand1: str, operand2: str) -> bool:
     return True
 
 
-def check_negative_validate(operand: str) -> bool:
-    """
-    this method check the validation of negative sign
-    :param operand: the operand in str type
-    :return: True if the sigh is valid
-    """
-    if not is_number(operand) and operand != '(':
-        raise NegativeError()
-    return True
-
-
 def check_factorial_validate(operand: str) -> bool:
     """
     this method check the validation of factorial sign
