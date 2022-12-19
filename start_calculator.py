@@ -52,6 +52,12 @@ def start_calculation():
             print(error)
         except EOFError as error:
             print(error)
+            goodbye_output()
+            exit(1)
+        except KeyboardInterrupt as error:
+            print(error)
+            goodbye_output()
+            exit(1)
 
 
 def calculate(equation: str) -> float:
@@ -63,11 +69,8 @@ def calculate(equation: str) -> float:
     equation = substring_invalid_characters(equation)
     equation = remove_duplicated_minuses(equation)
     equation_list = add_equation_to_list(equation)
-    print(equation_list)
     check_equation_validation(equation_list)
-    print(equation_list)
     equation_list = infix_to_postfix(equation_list)
-    print(equation_list)
     return calculate_postfix(equation_list)
 
 

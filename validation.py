@@ -272,8 +272,6 @@ def check_between_one_operands_validation(operand1: str, operand2: str, operator
 
 
 def check_equation_validation(equation_list: list):
-    # check if the ~ in the equation is valid
-    check_negative_validation(equation_list)
     # if equation is empty
     if not equation_list:
         raise EmptyInputError()

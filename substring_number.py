@@ -1,5 +1,6 @@
 from const import *
 from operator_classes import *
+import validation
 
 
 def remove_duplicated_minuses(equation: str) -> str:
@@ -9,7 +10,7 @@ def remove_duplicated_minuses(equation: str) -> str:
     :return: the operand with 1 or 0 minuses
     """
     # replace every ~ to a -
-    equation = check_for_tilde(equation)
+    equation = validation.check_for_tilde(equation)
     last_minus_index = 0
     count_negatives = 0
     while last_minus_index < (len(equation) - 1):
@@ -33,6 +34,8 @@ def check_for_tilde(equation: str) -> str:
     :param equation: the equation in str type
     :return: the equation without the ~
     """
+    # check if the ~ in the equation is valid
+    validation.check_negative_validation(equation)
     index = 0
     for char in equation:
         if char == '~':
