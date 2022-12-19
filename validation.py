@@ -81,6 +81,8 @@ def check_power_validate(operand1: str, operand2: str) -> bool:
     """
     if (not is_number(operand1) and operand1 != ')') or (not is_number(operand2) and operand2 != '('):
         raise PowerError()
+    if (operand1 == '0' or operand1 == '0.0') and (operand2 == '0' or operand2 == '0.0'):
+        raise PowerError("there is an ERROR! you can't power 0 by 0")
     return True
 
 
