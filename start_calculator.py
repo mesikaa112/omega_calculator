@@ -1,6 +1,7 @@
 from output import *
 from calculation import *
 from substring_number import *
+from validation import *
 from const import *
 
 
@@ -43,12 +44,14 @@ def start_calculation():
         except EmptyInputError as error:
             print(error)
         except IndexError as error:
-            print(error)
+            print("there is an ERROR! the result is too big")
         except DecimalPointError as error:
             print(error)
         except InValidCharsError as error:
             print(error)
         except MissingOperandError as error:
+            print(error)
+        except BracketsError as error:
             print(error)
         except ValueError as error:
             print(error)

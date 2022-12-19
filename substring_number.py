@@ -147,6 +147,7 @@ def add_equation_to_list(equation: str) -> list:
     is_first_number = True
     index = 0
     for char in equation:
+        validation.check_brackets_validation(equation_list, index, equation)
         # if the char is a number or '.'
         if is_number(char) or (char == '-' and is_unary_minus(equation, index)):
             # if this is the first char in the number
@@ -164,7 +165,7 @@ def add_equation_to_list(equation: str) -> list:
     return equation_list
 
 
-def infix_to_postfix(equation_list: list) -> list:
+def infix_to_postfix(equation_list) -> list:
     """
     this method turns the equation list from infix to postfix
     :param equation_list: the equation in infix in list type
@@ -184,7 +185,7 @@ def infix_to_postfix(equation_list: list) -> list:
         else:
             # if there is a minus and the item after it is a '(' and the item before it is an operator, or the minuses
             # start the expression
-            if item == '-' and equation_list[index + 1] == '(' and ((index - 1 < 0) or (index - 1 >= 0 and equation_list[index - 1] in OPERATORS_LIST)):
+            if item == '-' and is_unary_minus(equation_list, index) and equation_list[index + 1] == '(' and ((index - 1 < 0) or (index - 1 >= 0 and equation_list[index - 1] in OPERATORS_LIST)):
                 # pushing 0 to later do 0 - expression
                 new_equation_list.append('0')
                 minus_stack.append(item)
@@ -240,6 +241,7 @@ def is_float_number(operand: str) -> bool:
     :return: the index of the last number of the calculation in the equation
     """
     index = 0
+    # check_decimal_point_validate(operand)
     for char in operand:
         if char == '.':
             if 0 < index < len(operand) - 1 and operand[index - 1].isdigit() and \
@@ -260,7 +262,9 @@ def check_decimal_point_validate(operand: str) -> bool:
     for char in operand:
         if char == '.':
             count_points += 1
-    return count_points < 2
+    if count_points > 1:
+        raise DecimalPointError()
+    return True
 
 
 def is_unary_minus(equation: str, first_minus_index: int) -> bool:

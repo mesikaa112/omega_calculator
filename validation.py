@@ -1,4 +1,4 @@
-from get_operator import *
+from get_operator_functions import *
 from exception import *
 from substring_number import *
 from const import *
@@ -206,49 +206,56 @@ def is_integer(operand: str) -> bool:
     return True
 
 
-def check_brackets_validation(equation: list, index: int) -> bool:
+def check_brackets_validation(equation_list: list, index: int, equation: str) -> bool:
     """
     this method checks if the bracket is valid
-    :param equation: the equation in list type
+    :param equation_list: the equation in list type
     :param index: the index in the list of the bracket
+    :param equation: the equation in str type
     :return: True if the bracket is valid, otherwise raise BracketsError
     """
     # if the amount of the brackets is not valid, raise BracketsError
     if not check_brackets_amount_validation(equation):
         raise BracketsError()
-    if equation[index] == '(':
+    if equation_list != [] and equation_list[-1] == '(':
         # if from the left to the ( there is not an operator, raise BracketsError, else the bracket is valid
-        if index > 0 and equation[index - 1] not in OPERATORS_LIST:
+        if index > 0 and equation_list[-1] not in OPERATORS_LIST:
             raise BracketsError()
         else:
             return True
     # if the equation[index] is ')'
-    else:
+    elif equation_list != [] and equation_list[-1] == ')':
         # if from the left to the ( there is not an operator, raise BracketsError, else the bracket is valid
-        if index < len(equation) - 1 and equation[index + 1] not in OPERATORS_LIST:
+        if equation_list != [] and index < (len(equation_list) - 1) and equation_list[index] not in OPERATORS_LIST:
             raise BracketsError()
         else:
             return True
+    else:
+        return True
 
 
-def check_brackets_amount_validation(equation: list) -> bool:
+def check_brackets_amount_validation(equation: str) -> bool:
     """
     This method checks the validation of the brackets in the equation.
     :param: equation: the equation in list type
     :return: True if the brackets are valid, False otherwise.
     """
     brackets_stack = []
+    index = 0
     # for each bracket in the equation
     for char in equation:
         # if the char is an opener, add it to the stack
         if char == '(':
             brackets_stack.append(char)
+            if equation[index + 1] == ')':
+                raise BracketsError()
         elif char == ')':
             # if the char is a closer, check if the stack is empty
             if len(brackets_stack) == 0:
                 raise BracketsError()
             else:
                 brackets_stack.pop()
+        index += 1
 
     return len(brackets_stack) == 0
 
@@ -266,11 +273,25 @@ def has_between_two_key(char: str) -> bool:
 
 
 def check_between_two_operands_validation(operand1: str, operand2: str, operator: str):
+    """
+    this method check the validation of operators that should be between 2 operands
+    :param operand1: operand1 in str type
+    :param operand2: operand2 in str type
+    :param operator: operator in str type
+    :return: True if the operator is validate, Error otherwise
+    """
     validation_func = get_between_two_operator_validation(operator)
     return validation_func(operand1, operand2)
 
 
 def check_between_one_operands_validation(operand1: str, operand2: str, operator: str):
+    """
+    this method check the validation of operators that should be between 1 operand
+    :param operand1: operand1 in str type
+    :param operand2: operand2 in str type
+    :param operator: operator in str type
+    :return: True if the operator is validate, Error otherwise
+    """
     validation_func = get_between_one_operator_validation(operator)
     if BETWEEN_ONE_OPERATORS.get(operator) == "left":
         return validation_func(operand2)
@@ -279,13 +300,14 @@ def check_between_one_operands_validation(operand1: str, operand2: str, operator
 
 
 def check_equation_validation(equation_list: list):
+    """
+    this method checks the equation validate before his calculate
+    :param equation_list: the equation in list type
+    :return: if the equation is not valid, raise Error
+    """
     # if equation is empty
     if not equation_list:
         raise EmptyInputError()
     # if the equation contains invalid characters
     if not check_vaild_chars(equation_list):
         raise InValidCharsError()
-
-if __name__ == '__main__':
-    q = "2.344"
-    print(check_sum_validate(q))

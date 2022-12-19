@@ -1,5 +1,8 @@
 from math import pow
 from validation import *
+import get_operator_functions
+from const import *
+from substring_number import *
 
 
 def plus_calculate(operand1: str, operand2: str) -> float:
@@ -196,7 +199,7 @@ def calculate_sub_equation(operand1: str, operator: str, operand2: str) -> float
     :return: the calculate of the sub equation
     """
     sub_equation = [operand1, operator, operand2]
-    operator_class = get_operator(sub_equation, operator, 1)
+    operator_class = get_operator_functions.get_operator(sub_equation, operator, 1)
     calculation_func = operator_class.calculate()
     if operator in BETWEEN_ONE_OPERATORS:
         return calculation_func(operand1)
