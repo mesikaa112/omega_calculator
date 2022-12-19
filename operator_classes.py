@@ -1,3 +1,5 @@
+import validation
+import calculation
 from calculation import *
 
 
@@ -6,7 +8,7 @@ class Operator:
     this class is the base class of all the operators classes
     """
 
-    def __init__(self, equation: str, index: int):
+    def __init__(self, equation: list, index: int):
         self.operator = None
         self.equation = equation
         self.index = index
@@ -24,18 +26,18 @@ class Plus(Operator):
         this class presents the Plus class
     """
 
-    def __init__(self, equation: str, index: int):
+    def __init__(self, equation: list, index: int):
         super().__init__(equation, index)
         self.operator = '+'
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates operand1 plus operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return plus_calculate(self.equation, self.index)
+        return calculation.plus_calculate
 
 
 class Minus(Operator):
@@ -43,18 +45,18 @@ class Minus(Operator):
     this class presents the Minus class
     """
 
-    def __init__(self, equation: str, index: int):
+    def __init__(self, equation: list, index: int):
         super().__init__(equation, index)
         self.operator = '-'
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates operand1 minus operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return minus_calculate(self.equation, self.index)
+        return calculation.minus_calculate
 
 
 class Multiply(Operator):
@@ -62,18 +64,18 @@ class Multiply(Operator):
     this class presents the Multiply class
     """
 
-    def __init__(self, equation: str, index: int):
+    def __init__(self, equation: list, index: int):
         super().__init__(equation, index)
         self.operator = '*'
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates operand1 Multiply operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return mul_calculate(self.equation, self.index)
+        return calculation.mul_calculate
 
 
 class Divide(Operator):
@@ -81,18 +83,18 @@ class Divide(Operator):
     this class presents the Divide class
     """
 
-    def __init__(self, equation: str, index: int):
+    def __init__(self, equation: list, index: int):
         super().__init__(equation, index)
         self.operator = '/'
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates operand1 divide operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return div_calculate(self.equation, self.index)
+        return calculation.div_calculate
 
 
 class Power(Operator):
@@ -100,18 +102,18 @@ class Power(Operator):
     this class presents the Power class
     """
 
-    def __init__(self, equation: str, index: int):
+    def __init__(self, equation: list, index: int):
         super().__init__(equation, index)
         self.operator = '^'
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates operand1 Power operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return pow_calculate(self.equation, self.index)
+        return calculation.pow_calculate
 
 
 class Modulo(Operator):
@@ -119,18 +121,18 @@ class Modulo(Operator):
     this class presents the Modulo class
     """
 
-    def __init__(self, equation: str, index: int):
+    def __init__(self, equation: list, index: int):
         super().__init__(equation, index)
         self.operator = '%'
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates operand1 Modulo operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return mod_calculate(self.equation, self.index)
+        return calculation.mod_calculate
 
 
 class Maximum(Operator):
@@ -138,18 +140,18 @@ class Maximum(Operator):
     this class presents the Maximum class
     """
 
-    def __init__(self, equation: str, index: int):
+    def __init__(self, equation: list, index: int):
         super().__init__(equation, index)
         self.operator = '$'
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates the Maximum from operand1 and operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return max_calculate(self.equation, self.index)
+        return calculation.max_calculate
 
 
 class Minimum(Operator):
@@ -157,18 +159,18 @@ class Minimum(Operator):
     this class presents the Minimum class
     """
 
-    def __init__(self, equation: str, index: int):
+    def __init__(self, equation: list, index: int):
         super().__init__(equation, index)
         self.operator = '&'
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates the Minimum from operand1 and operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return min_calculate(self.equation, self.index)
+        return calculation.min_calculate
 
 
 class Average(Operator):
@@ -176,37 +178,18 @@ class Average(Operator):
     this class presents the Average class
     """
 
-    def __init__(self, equation: str, index: int):
+    def __init__(self, equation: list, index: int):
         super().__init__(equation, index)
         self.operator = '@'
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates the Average from operand1 and operand2 by using the relevant function
         :return: the result of the calculation
         """
-        return avg_calculate(self.equation, self.index)
-
-
-class Negative(Operator):
-    """
-    this class presents the Negative class
-    """
-
-    def __init__(self, equation: str, index: int):
-        super().__init__(equation, index)
-        self.operator = '~'
-        self.equation = equation
-        self.index = index
-
-    def calculate(self) -> float:
-        """
-        this method calculates the Negative of operand by using the relevant function
-        :return: the result of the calculation
-        """
-        return neg_calculate(self.equation, self.index)
+        return calculation.avg_calculate
 
 
 class Factorial(Operator):
@@ -214,15 +197,34 @@ class Factorial(Operator):
     this class presents the Factorial class
     """
 
-    def __init__(self, equation: str, index: int):
+    def __init__(self, equation: list, index: int):
         super().__init__(equation, index)
         self.operator = '!'
         self.equation = equation
         self.index = index
 
-    def calculate(self) -> float:
+    def calculate(self):
         """
         this method calculates the Factorial of operand by using the relevant function
         :return: the result of the calculation
         """
-        return fac_calculate(self.equation, self.index)
+        return calculation.fac_calculate
+
+
+class Sum(Operator):
+    """
+    this class presents the Sum class
+    """
+
+    def __init__(self, equation: list, index: int):
+        super().__init__(equation, index)
+        self.operator = '#'
+        self.equation = equation
+        self.index = index
+
+    def calculate(self):
+        """
+        this method calculates the Sum of a few operands by using the relevant function
+        :return: the result of the calculation
+        """
+        return calculation.sum_calculate

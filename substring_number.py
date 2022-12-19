@@ -1,58 +1,59 @@
 from const import *
+from operator_classes import *
+import validation
 
 
-def is_operator2_negative_number(equation: str, index: int, buff: int) -> bool:
-    """
-    this method checks if the operand from the right to the operator is negative number
-    :param equation: the equation in str type
-    :param index: the index in the equation of the operator
-    :param buff: the number of steps that taking forward from the operator
-    :return: True if the first char after the operator is '-' and False if not
-    """
-    return equation[index + buff] == '-'
-
-
-def is_operator1_negative_number(equation: str, index: int, buff: int) -> bool:
-    """
-    this method checks if the operand from the left to the operator is negative number
-    :param equation: the equation in str type
-    :param index: the index in the equation of the operator
-    :param buff: the number of steps that taking backward from the operator
-    :return: True if first char after the operands is '-' and False if not
-    """
-    return equation[index - buff] == '-'
-
-
-def if_only_negative_sign(operand: str) -> bool:
-    """
-    this method checks if the operand is only '-'
-    :param operand: the number in str type
-    :return: True if the number is only '-' and False if not
-    """
-    return operand == '-'
-
-
-def remove_duplicated_minuses(operand: str) -> str:
+def remove_duplicated_minuses(equation: str) -> str:
     """
     this method remove from a number his duplicated minuses
-    :param operand: the number in str type
+    :param equation: the number in str type
     :return: the operand with 1 or 0 minuses
     """
-    index = 0
-    countNegatives = 0
-    while index < (len(operand) - 1):
-        if operand[index] == '-':
-            countNegatives += 1
+    # replace every ~ to a -
+    equation = validation.check_for_tilde(equation)
+    last_minus_index = 0
+    count_negatives = 0
+    while last_minus_index < (len(equation) - 1):
+        if equation[last_minus_index] == '-':
+            first_minus_index = last_minus_index
+            while last_minus_index < (len(equation) - 1) and equation[last_minus_index] == '-':
+                last_minus_index += 1
+                count_negatives += 1
+            last_minus_index -= 1
+            equation = replace_minuses(equation, first_minus_index, last_minus_index, count_negatives)
+            last_minus_index = first_minus_index + 1
+            count_negatives = 0
         else:
-            break
+            last_minus_index += 1
+    return equation
+
+
+def check_for_tilde(equation: str) -> str:
+    """
+    this function change every ~ operator to a -
+    :param equation: the equation in str type
+    :return: the equation without the ~
+    """
+    # check if the ~ in the equation is valid
+    validation.check_negative_validation(equation)
+    index = 0
+    for char in equation:
+        if char == '~':
+            equation = equation[:index] + '-' + equation[index + 1:]
         index += 1
-    if countNegatives == 0:
-        return operand
-    if countNegatives % 2 == 0:
-        operand = operand[index:]
+    return equation
+
+
+def replace_minuses(equation: str, first_minus_index: int, last_minus_index: int, count_negatives: int) -> str:
+    if count_negatives % 2 == 0:
+        # if is unary minus, delete all the minuses else replace all the minuses with plus sign
+        if is_unary_minus(equation, first_minus_index):
+            return equation[:first_minus_index] + equation[last_minus_index + 1:]
+        else:
+            return equation[:first_minus_index] + '+' + equation[last_minus_index + 1:]
+    # replace all the minuses with one minus
     else:
-        operand = '-' + operand[index:]
-    return operand
+        return equation[:first_minus_index] + equation[last_minus_index:]
 
 
 def is_negative_number(operand: str) -> bool:
@@ -62,12 +63,11 @@ def is_negative_number(operand: str) -> bool:
     :return: True if the number is only '-' and False if not
     """
     index = 0
-    countNegatives = 0
-    while index < (len(operand) - 1):
-        if operand[index] == '-':
-            countNegatives += 1
+    for char in operand:
+        if char == '-' and index == 0 and len(operand) > 1:
+            return True
         index += 1
-    return not countNegatives % 2 == 0
+    return False
 
 
 def remove_negative_sign(operand: str) -> str:
@@ -86,60 +86,32 @@ def remove_negative_sign(operand: str) -> str:
     return new_str
 
 
-def is_float_number(equation: str, index: int) -> bool:
-    """
-    this method checks if a number
-    :param equation: the equation in str type
-    :param index: the index of the operator that used for calculate the specified calculation
-    :return: the index of the last number of the calculation in the equation
-    """
-    if 0 < index < (len(equation) - 1) and equation[index] == '.':
-        return equation[index - 1].isdigit() and equation[index + 1].isdigit()
-    return False
-
-
-def is_number(operand: str) -> bool:
-    """
-    the method check if a string can be a number (float number) or not
-    :param operand: string
-    :return: True if a string can be a number and False if not
-    """
-    return operand.isdigit() or is_float_number(operand, operand.find('.')) or operand[1:].isdigit()
-
-
-def substring_number(equation: str, index: int) -> (str, str):
+def substring_number(equation: list, index: int) -> (str, str):
     """
     this method substring from the equation the operands between the operator
-    :param equation: the equation in str type
+    :param equation: the equation in list type
     :param index: the index in the equation of the operator
     :return: a tuple of two operands that were cut from the str
     """
-    operand1 = ''
-    operand2 = ''
-    buff = 1
-    while (index - buff) >= 0 and (is_number(equation[index - buff]) or is_float_number(equation, (index - buff))):
-        operand1 = equation[index - buff] + operand1
-        buff += 1
-    while (index - buff) >= 0 and is_operator1_negative_number(equation, index, buff):
-        operand1 = equation[index - buff] + operand1
-        buff += 1
-    operand1 = remove_duplicated_minuses(operand1)
-    buff = 1
-    while (index + buff) < len(equation) and is_operator2_negative_number(equation, index, buff):
-        operand2 += equation[index + buff]
-        buff += 1
-    while (index + buff) < len(equation) and (is_number(equation[index + buff]) or is_float_number(equation, (index + buff))):
-        operand2 += equation[index + buff]
-        buff += 1
-    operand2 = remove_duplicated_minuses(operand2)
-    if if_only_negative_sign(operand2):
-        operand2 = ''
-    if if_only_negative_sign(operand1):
-        operand1 = ''
+    operand1 = ''   # the operand from the left to the operator
+    operand2 = ''   # the operand from the right to the operator
+    if 0 <= index < len(equation):
+        if index > 0:
+            # if operand1 is validate, if not so operand1 will be empty
+            if is_number(equation[index - 1]) or equation[index - 1] == ')':
+                operand1 = equation[index - 1]
+        if index + 1 < len(equation):
+            # if operand2 is validate, if not so operand2 will be empty
+            if is_number(equation[index + 1]) or equation[index + 1] == '(':
+                operand2 = equation[index + 1]
+            # if operand2 is negative number
+            elif (index + 2) < len(equation) and equation[index + 1] == '-' and (is_number(equation[index + 2]) or equation[index + 2] == '('):
+                operand2 = equation[index + 1] + equation[index + 2]
+
     return operand1, operand2
 
 
-def substring_spaces(equation: str) -> str:
+def substring_invalid_characters(equation: str) -> str:
     """
     this method substring from the equation all the spaces
     :param equation: the equation in str type
@@ -147,102 +119,9 @@ def substring_spaces(equation: str) -> str:
     """
     new_str = ""
     for char in equation:
-        if not char.isspace():
+        if char not in INVALID_CHARACTERS:
             new_str = new_str + char
     return new_str
-
-
-def get_index_for_operand1(equation: str, index: int) -> int:
-    """
-    this method find the index of the first number of the calculation in the equation
-    :param equation: the equation in str type
-    :param index: the index of the operator that used for calculate the specified calculation
-    :return: the index of the first number of the calculation in the equation
-    """
-    index_of_operand1 = index
-    buff = 1
-    while (index - buff) >= 0 and (is_number(equation[index - buff]) or is_float_number(equation, (index - buff))):
-        index_of_operand1 -= 1
-        buff += 1
-    while (index - buff) >= 0 and is_operator1_negative_number(equation, index, buff):
-        index_of_operand1 -= 1
-        buff += 1
-    return index_of_operand1
-
-
-def get_index_for_operand2(equation: str, index: int) -> int:
-    """
-    this method find the index of the last number of the calculation in the equation
-    :param equation: the equation in str type
-    :param index: the index of the operator that used for calculate the specified calculation
-    :return: the index of the last number of the calculation in the equation
-    """
-    index_of_operand2 = index
-    buff = 1
-    while (index + buff) < len(equation) and is_operator2_negative_number(equation, index, buff):
-        index_of_operand2 += 1
-        buff += 1
-    while (index + buff) < len(equation) and (is_number(equation[index + buff]) or is_float_number(equation, (index + buff))):
-        index_of_operand2 += 1
-        buff += 1
-    return index_of_operand2
-
-
-def add_result_to_equation(equation: str, result: float, index: int) -> str:
-    """
-    this method replace the specified calculation with the result of it in the equation
-    :param equation: equation in str type
-    :param result: a result of a calculation
-    :param index: the index of the operator that used for calculate the specified calculation
-    :return: the equation with the changes
-    """
-    if has_between_one_key(equation[index])[0]:
-        side = has_between_one_key(equation[index])[1]
-        if side == "left":
-            index_end_of_operand2 = get_index_for_operand2(equation, index)
-            index_beginning_of_operand1 = index
-        elif side == "right":
-            index_beginning_of_operand1 = get_index_for_operand1(equation, index)
-            index_end_of_operand2 = index
-
-    else:
-        index_beginning_of_operand1 = get_index_for_operand1(equation, index)
-        index_end_of_operand2 = get_index_for_operand2(equation, index)
-
-    first_part_equation = equation[:index_beginning_of_operand1]
-    second_part_equation = equation[index_end_of_operand2 + 1:]
-    equation = first_part_equation + str(result) + second_part_equation
-
-    return equation
-
-
-def has_between_two_key(char: str) -> bool:
-    """
-    this method checks if the char is in BETWEEN_TWO_OPERATORS dict
-    :param char: char in str type
-    :return: the method returns True if the operator is in BETWEEN_TWO_OPERATORS dict, otherwise False
-    """
-    for key in BETWEEN_TWO_OPERATORS.keys():
-        if char == key:
-            return True
-    return False
-
-
-def has_between_one_key(char: str) -> (bool, str):
-    """
-    this method checks if the char is in BETWEEN_ONE_OPERATORS dict
-    :param char: char in str type
-    :return: 'right' if the operator is need to be from right to operand and 'left' if ot should be fro his right,
-             in addition, the method returns True if the operator is in BETWEEN_ONE_OPERATORS dict, otherwise False
-    """
-    for key in BETWEEN_ONE_OPERATORS.keys():
-        if char == key:
-            if char == '!':
-                side = "right"
-            else:
-                side = "left"
-            return True, side
-    return False, None
 
 
 def substring_float_to_int(operand: str) -> int:
@@ -255,3 +134,146 @@ def substring_float_to_int(operand: str) -> int:
         if operand[i] == '.':
             return int(operand[: i])
     return int(operand)
+
+
+def add_equation_to_list(equation: str) -> list:
+    """
+    this method add an equation into list in the same order
+    :param equation: the equation in str type
+    :return: the equation in str type
+    """
+    equation_list = []
+    is_first_number = True
+    index = 0
+    for char in equation:
+        # if the char is a number or '.'
+        if is_number(char) or (char == '-' and is_unary_minus(equation, index)):
+            # if this is the first char in the number
+            if is_first_number:
+                equation_list.append(char)
+                is_first_number = False
+            # if this is not first char in the number
+            else:
+                equation_list[-1] += char
+        # if the char is an operator
+        else:
+            equation_list.append(char)
+            is_first_number = True
+        index += 1
+    return equation_list
+
+
+def infix_to_postfix(equation_list: list) -> list:
+    """
+    this method turns the equation list from infix to postfix
+    :param equation_list: the equation in infix in list type
+    :return: returns a list in of the equation in postfix
+    """
+    new_equation_list = []
+    operators_stack = []
+    index = 0
+    # in case that there is - before brackets expression
+    minus_stack = []
+    for item in equation_list:
+        # if item is number
+        if is_number(item):
+            new_equation_list.append(item)
+
+        # else the item is an operator or ()
+        else:
+            # if there is a minus and the item after it is a '(' and the item before it is an operator, or the minuses
+            # start the expression
+            if item == '-' and equation_list[index + 1] == '(' and ((index - 1 < 0) or (index - 1 >= 0 and equation_list[index - 1] in OPERATORS_LIST)):
+                # pushing 0 to later do 0 - expression
+                new_equation_list.append('0')
+                minus_stack.append(item)
+
+            elif item == '(':
+                operators_stack.append(item)
+                # pushing '(' to the minus stack to know which of the () has a minus in front of it
+                minus_stack.append(item)
+
+            elif item == ')':
+                operator = operators_stack.pop()
+                while operator != '(':
+                    new_equation_list.append(operator)
+                    operator = operators_stack.pop()
+
+                # popping out the '('
+                minus_stack.pop()
+                if len(minus_stack) > 0 and minus_stack[-1] == '-':
+                    # adding to the new list the the minus that in the minus stack
+                    new_equation_list.append(minus_stack.pop())
+
+            # if the item is not ( or ) than the item must be an operator
+            else:
+                # appending the operators from the stack as long as they have a higher priority than the current
+                # operator and the current top item is not ( and the stack isn't empty
+                while len(operators_stack) > 0 and operators_stack[-1] != '(' \
+                        and OPERATORS_PRIORITY[operators_stack[-1]] >= OPERATORS_PRIORITY[item]:
+                    new_equation_list.append(operators_stack.pop())
+
+                operators_stack.append(item)
+        index += 1
+
+    # at the end just append all of the remaining operators to the new list
+    while len(operators_stack) > 0:
+        new_equation_list.append(operators_stack.pop())
+
+    return new_equation_list
+
+
+def is_number(char: str) -> bool:
+    """
+    the method check if a string can be a number (float number) or not
+    :param char: string
+    :return: True if a string can be a number and False if not
+    """
+    return char.isdigit() or char == '.' or is_float_number(char) or is_negative_number(char)
+
+
+def is_float_number(operand: str) -> bool:
+    """
+    this method checks if a number is a float number
+    :param operand: the equation in str type
+    :return: the index of the last number of the calculation in the equation
+    """
+    index = 0
+    for char in operand:
+        if char == '.':
+            if 0 < index < len(operand) - 1 and operand[index - 1].isdigit() and \
+                    operand[index + 1].isdigit() and check_decimal_point_validate(operand):
+                return True
+            return False
+        index += 1
+    return False
+
+
+def check_decimal_point_validate(operand: str) -> bool:
+    """
+    this method check if the decimal point in a number is valid
+    :param operand: the operand in str type
+    :return: True if the decimal point in a number is valid, False otherwise
+    """
+    count_points = 0
+    for char in operand:
+        if char == '.':
+            count_points += 1
+    return count_points < 2
+
+
+def is_unary_minus(equation: str, first_minus_index: int) -> bool:
+    """
+    this method checks if the minus is unary or not
+    :param equation: the equation in str type
+    :param first_minus_index: the index in the equation of the leftest minus
+    :return: True if the minus is unary, False otherwise
+    """
+    if first_minus_index == 0:
+        return True
+    if 0 < first_minus_index < (len(equation) - 1):
+        if is_number(equation[first_minus_index - 1]) or equation[first_minus_index - 1] == ')' or equation[first_minus_index - 1] in BETWEEN_ONE_OPERATORS:
+            return False
+    else:
+        raise MinusError
+    return True

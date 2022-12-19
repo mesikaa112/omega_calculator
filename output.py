@@ -20,7 +20,7 @@ def welcome_output() -> str:
                  f"enter the equation here: ")
 
 
-def result_output(result: int):
+def result_output(result: float):
     """
     this method is the result string that showed to the user after calculating his equation
     :return: the result of the calculation
